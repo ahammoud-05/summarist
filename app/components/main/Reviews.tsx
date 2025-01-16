@@ -1,16 +1,8 @@
 import React from 'react'
 import { BsStarFill } from 'react-icons/bs'
 
-interface ModalProps {
-  toggleLoginModal: () => void;
-  togglePasswordModal: () => void;
-  toggleSignupModal: () => void;
-  passwordModal: boolean;
-  signupModal: boolean;
-  isModalOpen: boolean;
-}
 
-const Reviews = ({ toggleLoginModal, togglePasswordModal, toggleSignupModal }: ModalProps) => {
+const Reviews = ({ toggleModal }) => {
   return (
     <section id="reviews">
       <div className="row">
@@ -89,7 +81,7 @@ const Reviews = ({ toggleLoginModal, togglePasswordModal, toggleSignupModal }: M
             </div>
           </div>
           <div className="reviews__btn--wrapper">
-            <button onClick={toggleLoginModal} className="btn home__cta--btn">Login</button>
+            <button onClick={() => toggleModal("isModalOpen")} className="btn home__cta--btn">Login</button>
           </div>
         </div>
       </div>

@@ -1,8 +1,14 @@
 import Image from 'next/image'
 import logo from '../assets/logo.png'
 
+interface ModalProps {
+  modalState: {
+    isModalOpen: boolean;
+  }
+  toggleModal: (state: string) => void;
+}
 
-const Navbar = ({ toggleModal, modalState }) => {
+const Navbar = ({ toggleModal }: ModalProps) => {
   return (
     <>
     <nav className="nav">
@@ -11,7 +17,7 @@ const Navbar = ({ toggleModal, modalState }) => {
         <Image className="nav__img" src={logo} alt="logo" />
       </figure>
       <ul className="nav__list--wrapper">
-        <li className="nav__list nav__list--login" onClick={toggleModal("isModalOpen")}>Login</li>
+        <li className="nav__list nav__list--login" onClick={() => toggleModal("isModalOpen")}>Login</li>
         <li className="nav__list nav__list--mobile">About</li>
         <li className="nav__list nav__list--mobile">Contact</li>
         <li className="nav__list nav__list--mobile">Help</li>

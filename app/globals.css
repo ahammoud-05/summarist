@@ -357,6 +357,18 @@ button:disabled {
   z-index: 100;
 }
 
+.modal__signup {
+  background-color: white;
+  width: 400px;
+  height: 560px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 100;
+  border-radius: 4px;
+}
+
 .modal__content--password {
   display: flex;
   flex-direction: column;
@@ -376,13 +388,18 @@ button:disabled {
   border: 2px solid #2bd97c;
 }
 
-.modal__btn--password {
+.modal__btn {
   width: 330px;
   height: 40px;
   color: #032b41;
   background-color: #2bd97c;
   border-radius: 4px;
   font-size: 16px;
+  transition: all 300ms ease;
+}
+
+.modal__btn:hover {
+  background-color: #1cbd67;
 }
 
 .modal__btn--password-back {
@@ -397,6 +414,76 @@ button:disabled {
 }
 
 .modal__password.closed {
+  display: none;
+}
+
+.modal__content--signup {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.google__signup--wrapper {
+  margin-top: 25px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.google__signup--btn {
+  background-color: #4285f4;
+  color: white;
+  width: 330px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  font-size: 16px;
+  position: relative;
+  transition: all 300ms ease;
+}
+
+.google__signup--btn:hover {
+  cursor: pointer;
+  background-color: #3976d8;
+}
+
+.google__signup--icon-wrapper {
+  position: absolute;
+  display: flex;
+  left: 10px; 
+  top: 50%; 
+  transform: translateY(-50%);
+  background-color: white;
+  height: 36px;
+  width: 36px;
+  border-radius: 4px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.google__signup--icon {
+  width: 24px;
+  height: 24px;
+}
+
+.modal__btn--existing-account {
+  color: #116be9;
+  font-size: 16px;
+  margin-top: 16px;
+}
+
+.modal__signup.open {
+  display: block;
+  position: fixed;
+  height: 400px;
+  width: 370px;
+}
+
+.modal__signup.closed {
   display: none;
 }
 
@@ -743,6 +830,119 @@ button:disabled {
 .footer__copyright {
   color: #032b41;
   font-weight: 500;
+}
+
+/* FOR YOU */
+
+/* SEARCH BAR */
+
+.search__wrapper {
+  width: 100%;
+  height: 100%;
+  background-color: rgb(255, 255, 255);
+  position: relative;
+  margin-left: 0;
+  border-bottom: 1px solid rgb(212, 212, 212);
+}
+
+.search__input--wrapper {
+  display: flex;
+  justify-content: flex-end;
+  padding: 24px;
+}
+
+.search__input {
+  outline: none;
+  border: 2px solid rgb(182, 182, 182);
+  background-color: rgb(238, 238, 238);
+  width: 340px;
+  padding: 8px;
+  padding-left: 12px;
+  border-top-left-radius: 8px;
+  border-bottom-left-radius: 8px;
+}
+
+.search__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgb(238, 238, 238);
+  border: 2px solid rgb(182, 182, 182);
+  border-left: none;
+  border-top-right-radius: 8px;
+  border-bottom-right-radius: 8px;
+  padding: 12px;
+  font-size: 20px;
+}
+
+/* SIDEBAR */
+
+.sidebar__container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 200px;
+  height: 100vh;
+  background-color: #edf5f2;
+  z-index: 10;
+}
+
+.sidebar__content {
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - 60px);
+}
+
+.sidebar__img--wrapper {
+  padding-top: 22px;
+  margin: 0 16px;
+}
+
+.sidebar__top {
+  margin-top: 32px;
+  height: 618px;
+}
+
+.sidebar__link--wrapper {
+  display: flex;
+  align-items: center;
+  height: 56px;
+  color: #032b41;
+  margin-bottom: 8px;
+  cursor: pointer;
+}
+
+.sidebar__link--line {
+  width: 5px;
+  height: 56px;
+  margin-right: 16px;
+}
+
+.active--tab {
+  background-color: #2bd97c;
+  width: 5px;
+  height: 56px;
+  margin-right: 16px;
+}
+
+.sidebar__icon--wrapper {
+  width: 24px;
+  height: 24px;
+  font-size: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sidebar__link--text {
+  padding-left: 32px;
+}
+
+/* CONTENT */
+
+.fy__container {
+  width: 100%;
+  height: 100%;
 }
 
 @media (max-width: 768px) {

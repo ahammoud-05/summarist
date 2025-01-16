@@ -1,8 +1,9 @@
 "use client"
 import { useState } from "react";
 import Footer from "./components/Footer";
-import Modal from "./components/Modal";
-import Main from "./components/pages/Main";
+import Modals from "./components/Modals";
+import Main from "./main/page";
+import ForYou from "./for-you/page";
 
 export default function Home() {
 
@@ -12,16 +13,16 @@ const [modalState, setModalState] = useState({
     signupModal: false, 
     });
 
-    const toggleModal = (modal: keyof typeof modalState) => { setModalState((prev) => ({ ...prev,// Spread operator to copy the existing state
-      [modal]: !prev[modal] // Dynamically toggle the specified modal
+    const toggleModal = (modal: keyof typeof modalState) => { setModalState((prev) => ({ ...prev,
+      [modal]: !prev[modal] 
       })); };
     
-
   return (
     <>
     <Main />
+    <ForYou />
     <Footer />
-    <Modal modalState={modalState} toggleModal={toggleModal} />
+    <Modals modalState={modalState} toggleModal={toggleModal} />
     </>
   );
 }
