@@ -1,16 +1,55 @@
-import React from 'react'
+"use client"
+import React, { FormEvent, useState } from 'react'
 import { IoClose } from 'react-icons/io5';
+import { sendPasswordResetEmail } from 'firebase/auth';
+import { auth } from '../firebase/init';
 
 interface ModalProps {
   modalState: {
     isModalOpen: boolean;
     passwordModal: boolean;
     signupModal: boolean;
-  }
-  toggleModal: (state: string) => void;
+  };
+  toggleModal: (modal: keyof ModalProps["modalState"]) => void;
 }
 
 const ResetPassword = ({ toggleModal, modalState }: ModalProps) => {
+
+      const [email, setEmail] = useState<string>('');
+      const [message, setMessage] = useState<string | null>(null);
+      const [error, setError] = useState<string | null>(null)
+
+
+      const handleResetPassword = async (event: FormEvent) => {
+        event.preventDefault();
+        setMessage(null)
+        setError(null)
+
+        if (!email) {
+          setError("Please enter an email address.")
+          return;
+        }
+
+        try {
+          await sendPasswordResetEmail(auth, email);
+          setMessage("Please check your inbox for a password reset link.")
+        } catch (error: any) {
+          console.log("error to send email", error)
+          switch (error.code) {
+            case "auth/invalid-email":
+              setError("Invalid email.")
+              break;
+
+            case "auth/user-not-found":
+              setError("No user found.");
+              break;
+
+            default:
+              setError("An error occured.")
+          }
+        }
+      }
+
   return (
     <div className={`modal__password ${modalState.passwordModal ? "open" : "closed"}`}>
     <div className='modal__close--wrapper'>
@@ -23,9 +62,15 @@ const ResetPassword = ({ toggleModal, modalState }: ModalProps) => {
 
     <div className='modal__content--password'>
       <h3 className="modal__title--password">Reset your password</h3>
-      <form className='modal__form--password'>
-        <input className='modal__input' placeholder='Email address' />
-        <button className='modal__btn'>Send reset password link</button>
+      {message && <div className="success__message">{message}</div>}
+      {error && <div className="error__message">{error}</div>}
+      <form onSubmit={handleResetPassword} className='modal__form--password'>
+        <input 
+        className='modal__input' 
+        placeholder='Email address'
+        value={email}
+        onChange={(e) => setEmail(e.target.value)} />
+        <button type='submit' className='modal__btn'>Send reset password link</button>
       </form>
       <button
         onClick={() => {

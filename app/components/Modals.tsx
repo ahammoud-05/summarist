@@ -1,4 +1,3 @@
-"use client"
 import React from 'react';
 import Login from './Login';
 import ResetPassword from './ResetPassword';
@@ -27,6 +26,7 @@ const Modals = ({ toggleModal, modalState }: ModalProps) => {
             if (modalState.isModalOpen) toggleModal("isModalOpen")
             if (modalState.passwordModal) toggleModal("passwordModal")
             if (modalState.signupModal) toggleModal("signupModal")
+              console.log("modal clicked")
           }}
         ></div>
       )}

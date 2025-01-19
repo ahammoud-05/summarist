@@ -1,5 +1,5 @@
 import React from 'react'
-import landing from '../../assets/landing.png'
+import landing from '../assets/landing.png'
 import Image from 'next/image'
 
 

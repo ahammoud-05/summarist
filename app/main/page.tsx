@@ -1,10 +1,10 @@
 "use client";
 import React, { useState } from "react";
 import Navbar from "../components/Navbar";
-import Landing from "../components/main/Landing";
-import Features from "../components/main/Features";
-import Reviews from "../components/main/Reviews";
-import Numbers from "../components/main/Numbers";
+import Landing from "../components/Landing";
+import Features from "../components/Features";
+import Reviews from "../components/Reviews";
+import Numbers from "../components/Numbers";
 import Modals from "../components/Modals";
 
 const Main = () => {

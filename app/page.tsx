@@ -5,6 +5,7 @@ import Modals from "./components/Modals";
 import Main from "./main/page";
 import ForYou from "./for-you/page";
 
+
 export default function Home() {
 
 const [modalState, setModalState] = useState({ 
@@ -20,7 +21,6 @@ const [modalState, setModalState] = useState({
   return (
     <>
     <Main />
-    <ForYou />
     <Footer />
     <Modals modalState={modalState} toggleModal={toggleModal} />
     </>
