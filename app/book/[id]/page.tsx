@@ -33,17 +33,15 @@ interface Book {
   authorDescription: string;
 }
 
-interface BookDetailsProps {
-  fontSize: number;
-  onFontSizeChange: (size: number) => void;
-}
 
-const BookDetails = ({ fontSize, onFontSizeChange }: BookDetailsProps) => {
+const BookDetails = () => {
   const { id } = useParams();
   const [book, setBook] = useState<Book | null>(null);
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>();
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(false);
+  const onFontSizeChange = (size: number) => setFontSize(size);
+  const [fontSize, setFontSize] = useState<number>(16);
 
   useEffect(() => {
     const fetchData = async () => {
