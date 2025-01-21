@@ -4,11 +4,11 @@ import Sidebar from '../components/Sidebar'
 
 
 
-const Page = ({ fontSize, onFontSizeChange }: { fontSize: number; onFontSizeChange: (size: number) => void;}) => {
+const Page = () => {
   return (
     <>
     <SearchBar />
-    <Sidebar fontSize={fontSize} onFontSizeChange={onFontSizeChange} />
+    <Sidebar />
     <div className="row">
         <div className="container">
             <div className="fy__title">Saved Books</div>
