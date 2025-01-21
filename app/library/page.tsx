@@ -2,12 +2,9 @@ import React from 'react'
 import SearchBar from '../components/SearchBar'
 import Sidebar from '../components/Sidebar'
 
-interface SidebarProps {
-    fontSize: number;
-    onFontSizeChange: (size: number) => void;
-  }
 
-const Library = ({ fontSize, onFontSizeChange }: SidebarProps) => {
+
+const Library = ({ fontSize, onFontSizeChange }) => {
   return (
     <>
     <SearchBar />

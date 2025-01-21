@@ -4,16 +4,9 @@ import { IoClose } from 'react-icons/io5';
 import { sendPasswordResetEmail } from 'firebase/auth';
 import { auth } from '../firebase/init';
 
-interface ModalProps {
-  modalState: {
-    isModalOpen: boolean;
-    passwordModal: boolean;
-    signupModal: boolean;
-  };
-  toggleModal: (modal: keyof ModalProps["modalState"]) => void;
-}
 
-const ResetPassword = ({ toggleModal, modalState }: ModalProps) => {
+
+const ResetPassword = ({ toggleModal, modalState }) => {
 
       const [email, setEmail] = useState<string>('');
       const [message, setMessage] = useState<string | null>(null);

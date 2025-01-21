@@ -9,16 +9,9 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { ImSpinner8 } from 'react-icons/im';
 
-interface ModalProps {
-  modalState: {
-    isModalOpen: boolean;
-    passwordModal: boolean;
-    signupModal: boolean;
-  };
-  toggleModal: (modal: "isModalOpen" | "passwordModal" | "signupModal") => void;
-}
 
-const Login = ( { modalState, toggleModal }: ModalProps) => {
+
+const Login = ({ modalState, toggleModal }) => {
 
   const router = useRouter();
 

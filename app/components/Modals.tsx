@@ -3,17 +3,10 @@ import Login from './Login';
 import ResetPassword from './ResetPassword';
 import Signup from './Signup';
 
-interface ModalProps {
-  modalState: {
-    isModalOpen: boolean;
-    passwordModal: boolean;
-    signupModal: boolean;
-  };
-  toggleModal: (modal: "isModalOpen" | "passwordModal" | "signupModal") => void;
-}
 
 
-const Modals = ({ toggleModal, modalState }: ModalProps) => {
+
+const Modals = ({ toggleModal, modalState }) => {
 
   const isAnyModalOpen = modalState.isModalOpen || modalState.passwordModal || modalState.signupModal;
 

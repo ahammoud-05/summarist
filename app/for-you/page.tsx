@@ -8,20 +8,9 @@ import Suggested from '../components/Suggested';
 import Modals from '../components/Modals';
 
 
-interface SidebarProps {
-  fontSize: number;
-  onFontSizeChange: (size: number) => void;
-  modalState: {
-    isModalOpen: boolean;
-    passwordModal: boolean;
-    signupModal: boolean;
-  };
-  toggleModal: (modal: keyof SidebarProps["modalState"]) => void;
-  isSidebarOpen: boolean;
-  toggleSidebar: () => void;
-}
 
-const ForYou = ({ fontSize, onFontSizeChange }: SidebarProps) => {
+
+const ForYou = ({ fontSize, onFontSizeChange }) => {
 
   const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(false);
 

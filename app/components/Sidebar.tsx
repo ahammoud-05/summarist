@@ -12,20 +12,9 @@ import { usePathname, useRouter } from "next/navigation";
 import { auth } from "../firebase/init";
 
 
-interface SidebarProps {
-  isSidebarOpen: boolean;
-  toggleSidebar: () => void;
-  fontSize: number;
-  onFontSizeChange: (size: number) => void;
-  modalState: {
-    isModalOpen: boolean;
-    passwordModal: boolean;
-    signupModal: boolean;
-  };
-  toggleModal: (modal: keyof SidebarProps["modalState"]) => void;
-}
 
-const Sidebar = ({ fontSize, onFontSizeChange, toggleModal, modalState, isSidebarOpen}: SidebarProps) => {
+
+const Sidebar = ({ fontSize, onFontSizeChange, toggleModal, modalState, isSidebarOpen}) => {
 
   const pathname = usePathname();
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>();

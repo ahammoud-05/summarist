@@ -1,14 +1,21 @@
+"use client"
 import Image from 'next/image'
 import logo from '../assets/logo.png'
+import { useState } from 'react';
 
-interface ModalProps {
-  modalState: {
-    isModalOpen: boolean;
-  }
-  toggleModal: (state: string) => void;
-}
 
-const Navbar = ({ toggleModal }: ModalProps) => {
+const Navbar = () => {
+
+       const [modalState, setModalState] = useState({ 
+            isModalOpen: false, 
+            passwordModal: false, 
+            signupModal: false, 
+            });
+        
+            const toggleModal = (modal: keyof typeof modalState) => { setModalState((prev) => ({ ...prev,
+              [modal]: !prev[modal] 
+              })); };
+
   return (
     <>
     <nav className="nav">

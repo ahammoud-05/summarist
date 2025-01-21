@@ -9,19 +9,9 @@ import Image from "next/image";
 import login from "../assets/login.png";
 import Skeleton from "../components/Skeleton";
 
-interface SidebarProps {
-  fontSize: number;
-  onFontSizeChange: (size: number) => void;
-  modalState: {
-    isModalOpen: boolean;
-    passwordModal: boolean;
-    signupModal: boolean;
-  };
-  toggleModal: (modal: keyof SidebarProps["modalState"]) => void;
-  isSidebarOpen: boolean;
-  toggleSidebar: () => void;
-}
-const Settings = ({ fontSize, onFontSizeChange }: SidebarProps) => {
+
+
+const Settings = ({ fontSize, onFontSizeChange }) => {
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>();
   const [userEmail, setUserEmail] = useState<string | null>(null);
   const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(false);

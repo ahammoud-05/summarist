@@ -16,19 +16,8 @@ interface Books {
   audioLink: string;
 }
 
-interface SidebarProps {
-  fontSize: number;
-  onFontSizeChange: (size: number) => void;
-  modalState: {
-    isModalOpen: boolean;
-    passwordModal: boolean;
-    signupModal: boolean;
-  };
-  toggleModal: (modal: keyof SidebarProps["modalState"]) => void;
-  isSidebarOpen: boolean;
-  toggleSidebar: () => void;
-}
-const SearchBar = ({ toggleSidebar }: SidebarProps) => {
+
+const SearchBar = ({ toggleSidebar }) => {
 
   const [books, setBooks] = useState<Books[]>([]);
   const [search, setSearch] = useState<string>("");

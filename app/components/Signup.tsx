@@ -13,16 +13,9 @@ import { useRouter } from "next/navigation";
 import { FirebaseError } from "firebase/app";
 import { ImSpinner8 } from "react-icons/im";
 
-interface ModalProps {
-  modalState: {
-    isModalOpen: boolean;
-    passwordModal: boolean;
-    signupModal: boolean;
-  };
-  toggleModal: (modal: "isModalOpen" | "passwordModal" | "signupModal") => void;
-}
 
-const Signup = ({ toggleModal, modalState }: ModalProps) => {
+
+const Signup = ({ toggleModal, modalState }) => {
   const router = useRouter();
 
   const [email, setEmail] = useState<string>("");
