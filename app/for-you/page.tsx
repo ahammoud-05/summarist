@@ -8,13 +8,7 @@ import Suggested from '../components/Suggested';
 import Modals from '../components/Modals';
 
 
-const Page = ({ 
-  fontSize, 
-  onFontSizeChange,
- }: {
-  fontSize: number;
-  onFontSizeChange: (size: number) => void;
- }) => {
+const Page = () => {
 
   const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(false);
 
@@ -37,15 +31,15 @@ const Page = ({
     <SearchBar 
     toggleSidebar={toggleSidebar}
     isSidebarOpen={isSidebarOpen} 
-    fontSize={fontSize} 
-    onFontSizeChange={onFontSizeChange} 
+    // fontSize={fontSize} 
+    // onFontSizeChange={onFontSizeChange} 
     modalState={modalState}
     toggleModal={toggleModal}  />
       <Sidebar
     toggleSidebar={toggleSidebar}
     isSidebarOpen={isSidebarOpen} 
-    fontSize={fontSize} 
-    onFontSizeChange={onFontSizeChange} 
+    // fontSize={fontSize} 
+    // onFontSizeChange={onFontSizeChange} 
     modalState={modalState}
     toggleModal={toggleModal} />
     
