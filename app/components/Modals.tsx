@@ -8,9 +8,10 @@ interface ModalProps {
     isModalOpen: boolean;
     passwordModal: boolean;
     signupModal: boolean;
-  }
-  toggleModal: (state: string) => void;
+  };
+  toggleModal: (modal: "isModalOpen" | "passwordModal" | "signupModal") => void;
 }
+
 
 const Modals = ({ toggleModal, modalState }: ModalProps) => {
 

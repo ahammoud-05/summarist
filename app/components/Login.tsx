@@ -6,6 +6,8 @@ import Image from 'next/image';
 import { signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 import { auth } from '../firebase/init'
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
+import { ImSpinner8 } from 'react-icons/im';
 
 interface ModalProps {
   modalState: {
@@ -13,7 +15,7 @@ interface ModalProps {
     passwordModal: boolean;
     signupModal: boolean;
   };
-  toggleModal: (modal: keyof ModalProps["modalState"]) => void;
+  toggleModal: (modal: "isModalOpen" | "passwordModal" | "signupModal") => void;
 }
 
 const Login = ( { modalState, toggleModal }: ModalProps) => {
@@ -23,6 +25,7 @@ const Login = ( { modalState, toggleModal }: ModalProps) => {
     const [email, setEmail] = useState<string>('');
     const [password, setPassword] = useState<string>('');
     const [error, setError] = useState<string | null>(null)
+    const [isLoading, setIsLoading] = useState<boolean>(false);
 
     const handleGoogleLogin = async () => {
       const provider = new GoogleAuthProvider();
@@ -51,6 +54,7 @@ const Login = ( { modalState, toggleModal }: ModalProps) => {
       }
 
       try {
+        setIsLoading(true)
         await signInWithEmailAndPassword(auth, email, password)
         console.log("logged in!")
         router.push("/for-you")
@@ -74,55 +78,76 @@ const Login = ( { modalState, toggleModal }: ModalProps) => {
             setError("An error occured.")
         }
         console.log("Theres an error.")
+      } finally {
+        setIsLoading(false)
       }
     }
 
   return (
     <>
-      
-      <div className={`modal__wrapper ${modalState.isModalOpen ? "open" : "closed"}`}>
-        <div className="modal">
-          <div className="modal__content">
-            <div className="modal__title">Log in to Summarist</div>
-            {error && <div className='error__message'>{error}</div>}
-            <button className="btn guest__btn--wrapper">
-              <figure className="google__icon--mask guest__icon--mask">
-                <IoPersonSharp />
+    <div className={`modal__login ${modalState.isModalOpen ? "open" : "closed"}`}>
+        <div className='modal__close--wrapper'>
+          <button onClick={() => toggleModal("isModalOpen")} className='modal__close--btn'>
+            <figure className='modal__close--btn-icon-wrapper'>
+              <IoClose className='modal__close--btn-icon' />
+            </figure>
+          </button>
+        </div>
+
+        <div className='modal__content'>
+          {error && <div className='error__message'>{error}</div>}
+          <h3 className="modal__title">Login to Summarist</h3>
+          <div className='google__login--wrapper'>
+            <Link href="/for-you">
+            <button className='guest__login--btn'>
+              <figure className='guest__login--icon-wrapper'>
+                <IoPersonSharp className='guest__login--icon' />
               </figure>
-              <div>Login as a Guest</div>
+              Login as Guest
             </button>
-            <div className="modal__seperator">
-              <span className="modal__seperator--text">or</span>
-            </div>
-            <button onClick={handleGoogleLogin} className="btn google__btn--wrapper">
-              <figure className="google__icon--mask">
-                <Image src={google} alt='google-logo' />
-              </figure>
-              <div>Login with google</div>
-            </button>
-            <div className="modal__seperator">
-              <span className="modal__seperator--text">or</span>
-            </div>
-            <form onSubmit={handleSubmit} className="modal__login--form">
-              <input onChange={(event) => setEmail(event.target.value)} type='email' placeholder='Email address' className="modal__login--input">
-              </input>
-              <input onChange={(event) => setPassword(event.target.value)} type='password' placeholder='password' className="modal__login--input">
-              </input>
-              <button type='submit' className="btn">
-                <span>Login</span>
-              </button>
-            </form>
+            </Link>
           </div>
-          <div onClick={() => {
-            toggleModal("passwordModal")
-            toggleModal("isModalOpen")
-            }} className="modal__forgot--password">Forgot your password?</div>
-          <button onClick={() => {
-            toggleModal("signupModal")
-            toggleModal("isModalOpen")
-          }} className="modal__account--btn">Don't have an account?</button>
-          <div onClick={() => toggleModal("isModalOpen")} className="modal__close--btn">
-            <IoClose />
+          <div className='modal__seperator'>
+            <hr className='line1 line' /> or <hr className='line2 line' />
+          </div>
+          <div className='google__login--wrapper'>
+            <button onClick={handleGoogleLogin} className='google__login--btn'>
+                <figure className='google__login--icon-wrapper'>
+                <Image src={google} alt='google' className='google__login--icon' />
+              </figure>
+              Login with Google
+            </button>
+          </div>
+          <div className='modal__seperator'>
+            <hr className='line1 line' /> or <hr className='line2 line' />
+          </div>
+          <form onSubmit={handleSubmit} className='modal__form'>
+            <input onChange={(event) => setEmail(event.target.value)} className='modal__input' type='email' placeholder='Email Address' />
+            <input onChange={(event) => setPassword(event.target.value)} className='modal__input' type='password' placeholder='Password' />
+            <button type='submit' className='modal__btn'>
+              {isLoading ? (
+                <div className="button__spinner">
+                <ImSpinner8 />
+                </div>
+              ) : "Login"}
+            </button>
+          </form>
+          <div className='modal__links'>
+            <button
+              onClick={() => {
+                toggleModal("isModalOpen")
+                toggleModal("passwordModal")
+              }}
+              className='modal__link modal__link--password'
+            >
+              Forgot your password?
+            </button>
+            <button onClick={() => {
+                toggleModal("isModalOpen")
+                toggleModal("signupModal")
+            }} className='modal__link modal__link--signup'>
+              Don't have an account?
+            </button>
           </div>
         </div>
       </div>

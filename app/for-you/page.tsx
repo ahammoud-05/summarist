@@ -15,11 +15,15 @@ interface SidebarProps {
     isModalOpen: boolean;
     passwordModal: boolean;
     signupModal: boolean;
-  }
-  toggleModal: (modal: keyof SidebarProps['modalState']) => void;
+  };
+  toggleModal: (modal: keyof SidebarProps["modalState"]) => void;
+  isSidebarOpen: boolean;
+  toggleSidebar: () => void;
 }
 
 const ForYou = ({ fontSize, onFontSizeChange }: SidebarProps) => {
+
+  const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(false);
 
   const [modalState, setModalState] = useState({ 
       isModalOpen: false, 
@@ -31,14 +35,27 @@ const ForYou = ({ fontSize, onFontSizeChange }: SidebarProps) => {
         [modal]: !prev[modal] 
         })); };
 
+        const toggleSidebar = () => {
+          setIsSidebarOpen(!isSidebarOpen);
+        };
+
   return (
     <div className="fy__content--wrapper">
-    <SearchBar />
-    <Sidebar 
+    <SearchBar 
+    toggleSidebar={toggleSidebar}
+    isSidebarOpen={isSidebarOpen} 
+    fontSize={fontSize} 
+    onFontSizeChange={onFontSizeChange} 
+    modalState={modalState}
+    toggleModal={toggleModal}  />
+      <Sidebar
+    toggleSidebar={toggleSidebar}
+    isSidebarOpen={isSidebarOpen} 
     fontSize={fontSize} 
     onFontSizeChange={onFontSizeChange} 
     modalState={modalState}
     toggleModal={toggleModal} />
+    
     <div className="fy__container">
       <div className="fy__row">
         <FeaturedBook />

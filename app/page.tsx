@@ -3,7 +3,6 @@ import { useState } from "react";
 import Footer from "./components/Footer";
 import Modals from "./components/Modals";
 import Main from "./main/page";
-import ForYou from "./for-you/page";
 
 
 export default function Home() {

@@ -1,9 +1,9 @@
 "use client";
 import axios from "axios";
-import { useParams } from "next/navigation";
-import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { CiClock2 } from "react-icons/ci";
+import { FaBars } from "react-icons/fa";
+import { ImSpinner8 } from "react-icons/im";
 import { IoCloseOutline, IoSearchOutline } from "react-icons/io5";
 
 interface Books {
@@ -16,21 +16,34 @@ interface Books {
   audioLink: string;
 }
 
-const SearchBar = () => {
-  const router = useRouter();
-  const { id } = useParams();
+interface SidebarProps {
+  fontSize: number;
+  onFontSizeChange: (size: number) => void;
+  modalState: {
+    isModalOpen: boolean;
+    passwordModal: boolean;
+    signupModal: boolean;
+  };
+  toggleModal: (modal: keyof SidebarProps["modalState"]) => void;
+  isSidebarOpen: boolean;
+  toggleSidebar: () => void;
+}
+const SearchBar = ({ toggleSidebar, isSidebarOpen }: SidebarProps) => {
 
   const [books, setBooks] = useState<Books[]>([]);
   const [search, setSearch] = useState<string>("");
-  const [isFocused, setIsFocused] = useState<boolean>(false);
   const [durations, setDurations] = useState<Record<string, string>>({});
+  const [isLoading, setIsLoading] = useState<boolean>(true)
 
   useEffect(() => {
     const fetchData = async () => {
       if (search.trim() === "") {
         setBooks([]);
+        setIsLoading(false)
         return;
       }
+
+      setIsLoading(true);
 
       try {
         const res = await axios.get<Books[]>(
@@ -44,8 +57,10 @@ const SearchBar = () => {
             setDurations((prev) => ({ ...prev, [book.id]: duration }));
           });
         });
+        setIsLoading(false);
       } catch (error) {
         console.log(error);
+        setIsLoading(false);
       }
     };
 
@@ -73,6 +88,7 @@ const SearchBar = () => {
         <div className="search__wrapper">
           <div className="search__content">
             <div className="search">
+              
               <div className="search__input--wrapper">
                 <input
                   type="text"
@@ -92,11 +108,18 @@ const SearchBar = () => {
                   )}
                 </div>
               </div>
+              <button onClick={toggleSidebar} className="hamburger__menu">
+                <FaBars size={40} />
+              </button>
             </div>
           </div>
           {search.trim() !== "" && books.length > 0 && (
             <div className="search__books--wrapper">
-              {books.map((book) => {
+              { isLoading ? (
+                <div className="search__spinner--wrapper">
+                  <ImSpinner8 />
+                </div>
+              ) : books.map((book) => {
                 return (
                   <a href={`/book/${book.id}`} className="search__book--link">
                     <figure className="search__book--img-wrapper">

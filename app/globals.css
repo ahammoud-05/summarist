@@ -46,6 +46,14 @@ button:disabled {
   opacity: 0.65;
 }
 
+.skeleton-box {
+  display: inline-block;
+  height: 1em;
+  position: relative;
+  overflow: hidden;
+  background-color: #dddbdd;
+}
+
 .not-allowed {
   cursor: not-allowed;
 }
@@ -144,6 +152,19 @@ button:disabled {
   cursor: pointer;
 }
 
+.button__spinner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.button__spinner svg {
+  width: 32px;
+  height: 32px;
+  color: white;
+  animation: spin 1s linear infinite;
+}
+
 /* MODAL */
 
 .modal__overlay--background {
@@ -168,125 +189,376 @@ button:disabled {
   font-size: 14px;
 }
 
-.modal, .modal__wrapper {
-  width: 100%;
-  z-index: 9999;
-}
-
-.modal.open {
-  display: block;
-}
-
-.modal.closed {
-  display: none;
-}
-
-.modal__wrapper {
-  position: fixed;
-  top: 0;
-  left: 0;
-  height: 100%;
-  background-color: rgba(0,0,0,.75);
+.modal__login {
+  background-color: white;
+  width: 400px;
+  height: 580px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 100;
+  border-radius: 4px;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  flex-direction: column;
+  padding: 16px;
+  box-sizing: border-box;
 }
 
 .modal__content {
-  padding: 48px 32px 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  height: 100%;
 }
 
 .modal__title {
+  color: #032b41;
   text-align: center;
-  font-size: 20px;
-  font-weight: 700;
-  color:#032b41;
-  margin-bottom: 24px;
+  margin-top: 10px;
 }
 
-.btn.guest__btn--wrapper {
-  position: relative;
-  display: flex;
-  background-color: #3a579d;
-  color: white;
-  justify-content: center;
+.error__message {
+  color: red;
+  text-align: center;
+  font-size: 14px;
 }
 
-.guest__icon--mask {
-  background-color: transparent;
+.success__message {
+  color: green;
+  text-align: center;
+  font-size: 14px;
 }
 
-.google__icon--mask {
+.guest__login--wrapper {
+  margin-top: 25px;
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 36px;
-  height: 36px;
-  border-radius: 4px;
+}
+
+.guest__login--btn {
+  background-color: #3a579d;
+  color: white;
+  width: 330px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  font-size: 16px;
+  position: relative;
+  transition: all 300ms ease;
+}
+
+.guest__login--btn:hover {
+  background-color: #324c86;
+  cursor: pointer;
+}
+
+.guest__login--icon-wrapper {
   position: absolute;
-  left: 2px;
+  display: flex;
+  left: 10px; 
+  top: 50%; 
+  transform: translateY(-50%);
+}
+
+.guest__login--icon{
+  font-size: 35px;
+}
+
+.modal__close--wrapper {
+  display: flex; 
+  justify-content: flex-end;
+  margin-right: 12px;
+  margin-top: 12px;
+}
+
+.modal__close--btn-icon{
+  color: black;
+  font-size: 35px;
 }
 
 .modal__seperator {
   display: flex;
   align-items: center;
-  margin: 16px 0;
+  justify-content: center;
+  width: 80%;
+  height: 10px;
+  color: gray;
+  margin-top: 25px;
 }
 
-.modal__seperator:before, .modal__seperator:after {
-  content: '';
-  display: block;
-  flex-grow: 1;
-  background-color: #bac8ce;
+.line {
+  width: 150px;
 }
 
-.modal__seperator--text {
-  margin: 0 24px;
-  font-size: 14px;
-  color:#394547;
-  font-weight: 500;
+.line1 {
+  margin-right: 20px;
 }
 
-.modal__login--form {
+.line2 {
+  margin-left: 20px;
+}
+
+.google__login--wrapper {
+  margin-top: 25px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.google__login--btn {
+  background-color: #4285f4;
+  color: white;
+  width: 330px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  font-size: 16px;
+  position: relative;
+  transition: all 300ms ease;
+}
+
+.google__login--btn:hover {
+  cursor: pointer;
+  background-color: #3976d8;
+}
+
+.google__login--icon-wrapper {
+  position: absolute;
+  display: flex;
+  left: 10px; 
+  top: 50%; 
+  transform: translateY(-50%);
+  background-color: white;
+  height: 36px;
+  width: 36px;
+  border-radius: 4px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.google__login--icon{
+  width: 24px;
+  height: 24px;
+
+}
+
+.modal__form {
+  margin-top: 20px;
   display: flex;
   flex-direction: column;
-  gap: 16px;
 }
 
-.modal__login--input {
+.modal__input {
+  width: 330px;
   height: 40px;
-  border: 2px solid #bac8ce;
-  padding: 0 12px;
+  margin-bottom: 20px;
+  padding-left: 8px;
+  border: 2px solid gray;
+  border-radius: 4px;
+  outline: none;
 }
 
-.modal__forgot--password {
-  text-align: center;
-  color: #116be9;
-  font-weight: 300;
-  font-size: 14px;
-  width: fit-content;
-  margin: 0 auto 16px;
-  cursor: pointer;
+.modal__input:focus {
+  border: 2px solid #2bd97c;
 }
 
-.modal__account--btn {
+.modal__login--btn {
+  width: 330px;
   height: 40px;
-  text-align: center;
-  background-color: #f1f6f4;
-  width: 100%;
-  border-radius: 0 0 4px 4px;
-  font-weight: 300;
+  color: #032b41;
+  background-color: #2bd97c;
+  border-radius: 4px;
   font-size: 16px;
 }
 
-.modal__close--btn {
-  position: absolute;
-  top: 12px;
-  right: 12px;
+.modal__links {
   display: flex;
+  flex-direction: column;
+  margin-top: 24px;
+}
+
+.modal__link {
+  color: #116be9;
+}
+
+.modal__link--password {
+  font-size: 16px;
+}
+
+.modal__link--signup {
+  margin-top: 20px;
+  font-size: 20px;
+}
+
+.modal__login.open {
+  display: block;
+  position: fixed;
+}
+
+.modal__login.closed {
+  display: none;
+}
+
+.modal__overlay--background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8); 
+  z-index: 11;
+}
+
+.modal__password {
+  background-color: white;
+  width: 400px;
+  height: 250px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 8px;
+  z-index: 100;
+}
+
+.modal__signup {
+  background-color: white;
+  width: 400px;
+  height: 590px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 100;
+  border-radius: 4px;
+}
+
+.modal__content--password {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal__form--password {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 24px;
+}
+
+.modal__form--password:focus {
+  border: 2px solid #2bd97c;
+}
+
+.modal__btn {
+  width: 330px;
+  height: 40px;
+  color: #032b41;
+  background-color: #2bd97c;
+  border-radius: 4px;
+  font-size: 16px;
+  transition: all 300ms ease;
+}
+
+.modal__btn:hover {
+  background-color: #1cbd67;
+}
+
+.modal__btn--password-back {
+  color: #116be9;
+  font-size: 16px;
+  margin-top: 16px;
+}
+
+.modal__password.open {
+  display: block;
+  position: fixed;
+}
+
+.modal__password.closed {
+  display: none;
+}
+
+.modal__content--signup {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.google__signup--wrapper {
+  margin-top: 25px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.google__signup--btn {
+  background-color: #4285f4;
+  color: white;
+  width: 330px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  font-size: 16px;
+  position: relative;
+  transition: all 300ms ease;
+}
+
+.google__signup--btn:hover {
   cursor: pointer;
-  transition: opacity .2s;
+  background-color: #3976d8;
+}
+
+.google__signup--icon-wrapper {
+  position: absolute;
+  display: flex;
+  left: 10px; 
+  top: 50%; 
+  transform: translateY(-50%);
+  background-color: white;
+  height: 36px;
+  width: 36px;
+  border-radius: 4px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.google__signup--icon {
+  width: 24px;
+  height: 24px;
+}
+
+.modal__btn--existing-account {
+  color: #116be9;
+  font-size: 16px;
+  margin-top: 16px;
+}
+
+.modal__signup.open {
+  display: block;
+  position: fixed;
+  height: 420px;
+  width: 370px;
+}
+
+.modal__signup.closed {
+  display: none;
 }
 
 /* LANDING */
@@ -651,13 +923,14 @@ button:disabled {
   display: flex;
   justify-content: flex-end;
   padding: 24px;
+  width: 330px;
 }
 
 .search__input {
   outline: none;
   border: 2px solid rgb(182, 182, 182);
   background-color: rgb(238, 238, 238);
-  width: 340px;
+  width: 100%;
   padding: 8px;
   padding-left: 12px;
   border-top-left-radius: 8px;
@@ -687,6 +960,26 @@ button:disabled {
   height: 100vh;
   background-color: #edf5f2;
   z-index: 10;
+  transition: transform 300ms ease;
+}
+
+/* .sidebar__container.open {
+  transform: translateX(0);
+} */
+
+/* .sidebar__container.closed {
+  transform: translateX(-100%);
+} */
+
+.hamburger__menu {
+  position: relative;
+  display: none;
+  margin-right: 8px;
+}
+
+.search {
+  display: flex;
+  justify-content: end;
 }
 
 .sidebar__content {
@@ -1121,6 +1414,30 @@ button:disabled {
   height: calc(100vh - 160px);
 }
 
+.spinner__wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+
+.spinner__wrapper svg {
+  width: 64px;
+  height: 64px;
+  color:#032b41;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
 .audio__book--summary {
   font-size: 16px;
   white-space: pre-line;
@@ -1266,6 +1583,21 @@ button:disabled {
   border: 1px solid #e1e7ea;
   box-shadow: 0 0 6px 0 rgba(0,0,0,.14);
   z-index: 999;
+}
+
+.search__spinner--wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+
+.search__spinner--wrapper svg {
+  width: 32px;
+  height: 32px;
+  color:#032b41;
+  animation: spin 1s linear infinite;
 }
 
 .search__book--link {
@@ -1587,6 +1919,7 @@ button:disabled {
   border-bottom: 1px solid #ddd;
   margin-bottom: 8px;
   overflow: hidden;
+  height: auto;
 }
 
 .accordion__header {
@@ -1619,7 +1952,8 @@ button:disabled {
 }
 
 .show {
-  max-height: 96px;
+  height: auto;
+  max-height: 200px;
   transition: all 600ms ease;
 }
 
@@ -1638,21 +1972,106 @@ button:disabled {
   transition: all 600ms ease;
 }
 
-.accordian__body.show {
+.accordion__body.show {
   transition: all 300ms ease;
 }
 
-.accordian__body.collapse {
+.accordion__body.collapse {
   transition: all 300ms ease;
+  overflow: visible;
 }
 
 @media (max-width: 1200px) {
   .featured__book--container {
     width: 100%;
   }
+
+  .sidebar__container {
+    transform: translateX(0)
+  }
+}
+
+@media (max-width: 992px) {
+  .inner__wrapper {
+    flex-direction: column-reverse;
+    gap: 32px;
+  }
+
+  .inner__book--img-wrapper {
+    display: flex;
+    justify-content: center;
+  }
 }
 
 @media (max-width: 768px) {
+
+  .plan__title {
+    font-size: 26px;
+    margin-bottom: 32px;
+  }
+
+  .plan__subtitle {
+    font-size: 16px;
+  }
+
+  .plan__features--wrapper {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .section__title {
+    font-size: 24px;
+  }
+
+  .accordion__title {
+    font-size: 20px;
+  }
+
+  .accordion__body {
+    font-size: 14px;
+  }
+
+  .audio__wrapper {
+    height: 180px;
+    padding: 16px 24px;
+    flex-direction: column;
+  }
+
+  .audio__wrapper>div {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .audio__book--summary-title {
+    font-size: 20px;
+  }
+
+  .audio__book--summary-text {
+    font-size: 14px;
+  }
+
+  .hamburger__menu {
+    display: block;
+  }
+
+  .sidebar__container {
+    transition: all 300ms ease;
+    transform: translateX(-100%);
+  }
+
+  .sidebar__container.closed {
+    transform: translateX(-100%);
+  }
+
+  .sidebar__container.open {
+    transform: translateX(0);
+  }
+
+  .fy__content--wrapper {
+    margin: 0;
+  }
+
+
   .landing__content {
     display: flex;
     flex-direction: column;
@@ -1747,4 +2166,13 @@ button:disabled {
   .nav__list--mobile {
     display: none;
   }
+
+  .modal__login, .modal__signup.open, .modal__password {
+    width: 300px;
+  }
+
+  .guest__login--btn, .google__login--btn, .modal__input, .modal__btn, .google__signup--btn {
+    width: 230px;
+  }
+
 }

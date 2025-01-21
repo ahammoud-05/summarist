@@ -5,6 +5,7 @@ import PremiumPill from './PremiumPill';
 import { CiClock2 } from 'react-icons/ci';
 import { IoStarOutline } from 'react-icons/io5';
 import Link from 'next/link';
+import Skeleton from './Skeleton';
 
 interface SuggestedBook {
     id: string; 
@@ -22,6 +23,7 @@ const Suggested = () => {
 
     const [suggestedBook, setSuggestedBook] = useState<SuggestedBook[]>([]);
     const [durations, setDurations] = useState<Record<string, string>>({});
+    const [isLoading, setIsLoading] = useState<boolean>(true);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -33,10 +35,12 @@ const Suggested = () => {
           audio.addEventListener("loadedmetadata", () => {
             const duration = formatDuration(audio.duration);
             setDurations((prev) => ({...prev, [book.id]: duration}))
+            
           })
         })
+        setIsLoading(false)
       } catch(error) {
-        return <div>Error fetching book.</div>
+        setIsLoading(false)
       }
     }
 
@@ -50,50 +54,51 @@ const Suggested = () => {
   }
 
   return (
-    <> 
-    <div className="rb__wrapper">
-    {suggestedBook.map((book) => {
-
-    return (
-        
-        <Link href={`/book/${book.id}`} key={book.id} className="rb__link">
-            {book.subscriptionRequired && <PremiumPill />}
-            <figure className="rb__img--wrapper">
-                <img className='rb__img' src={book.imageLink} alt={book.title} />
-            </figure>
-            <div className="rb__title">
-                {book.title}
-            </div>
-            <div className="rb__author">
-                {book.author}
-            </div>
-            <div className="rb__subtitle">
-                {book.subTitle}
-            </div>
-            <div className="rb__details--wrapper">
-                <div className="rb__details">
+      <div className="rb__wrapper">
+        {isLoading ?
+            Array.from({ length: 6 }, (_, index) => (
+              <div key={index} className="rb__link">
+                <div>
+                  <Skeleton width="150px" height="200px" borderRadius="4px" />
+                  <Skeleton width="100px" height="20px" borderRadius="4px" />
+                  <Skeleton width="80px" height="20px" borderRadius="4px" />
+                  <Skeleton width="60px" height="20px" borderRadius="4px" />
+                </div>
+              </div>
+            ))
+          :
+            suggestedBook.map((book) => (
+              <Link href={`/book/${book.id}`} key={book.id} className="rb__link">
+                {book.subscriptionRequired && <PremiumPill />}
+                <figure className="rb__img--wrapper">
+                  <img className="rb__img" src={book.imageLink} alt={book.title} />
+                </figure>
+                <div className="rb__title">{book.title}</div>
+                <div className="rb__author">{book.author}</div>
+                <div className="rb__subtitle">{book.subTitle}</div>
+                <div className="rb__details--wrapper">
+                  <div className="rb__details">
                     <div className="rb__details--icon">
-                        <CiClock2 />
+                      <CiClock2 />
                     </div>
                     <div className="rb__details--text">
-                        {durations[book.id] || "Loading."}
+                      {durations[book.id] || "Loading..."}
                     </div>
-                </div>
-                <div className="rb__details">
+                  </div>
+                  <div className="rb__details">
                     <div className="rb__details--icon">
-                        <IoStarOutline />
+                      <IoStarOutline />
                     </div>
                     <div className="rb__details--text">
-                        {book.averageRating}
+                      {book.averageRating}
                     </div>
+                  </div>
                 </div>
-            </div>
-        </Link>
-    )
-    })}
-    </div>
-    </>
-  )
-}
+              </Link>
+            ))}
+      </div>
+    );
+  };
+  
 
 export default Suggested

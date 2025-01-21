@@ -13,17 +13,19 @@ import { auth } from "../firebase/init";
 
 
 interface SidebarProps {
+  isSidebarOpen: boolean;
+  toggleSidebar: () => void;
   fontSize: number;
   onFontSizeChange: (size: number) => void;
   modalState: {
     isModalOpen: boolean;
     passwordModal: boolean;
     signupModal: boolean;
-  }
+  };
   toggleModal: (modal: keyof SidebarProps["modalState"]) => void;
 }
 
-const Sidebar = ({ fontSize, onFontSizeChange, toggleModal, modalState }: SidebarProps) => {
+const Sidebar = ({ fontSize, onFontSizeChange, toggleModal, modalState, isSidebarOpen}: SidebarProps) => {
 
   const pathname = usePathname();
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>();
@@ -49,8 +51,10 @@ const Sidebar = ({ fontSize, onFontSizeChange, toggleModal, modalState }: Sideba
         }
       }
 
+
   return (
-    <div className="sidebar__container">
+    <>
+    <div className={`sidebar__container ${ isSidebarOpen ? "open" : "closed"}`}>
       <div className="sidebar__content">
         <div className="sidebar__img--wrapper">
           <Image width={160} height={40} src={logo} alt="logo" />
@@ -148,6 +152,7 @@ const Sidebar = ({ fontSize, onFontSizeChange, toggleModal, modalState }: Sideba
         </div>
       </div>
     </div>
+    </>
   );
 };
 
