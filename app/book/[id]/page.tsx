@@ -34,7 +34,7 @@ interface Book {
 }
 
 
-const BookDetails = ({ 
+export const BookDetails = ({ 
   fontSize, 
   onFontSizeChange,
  }: {
@@ -301,5 +301,3 @@ const BookDetails = ({
     </>
   );
 };
-
-export default BookDetails;
