@@ -35,13 +35,7 @@ interface Book {
 
 type ModalKeys = "isModalOpen" | "passwordModal" | "signupModal";
 
-const BookDetails = ({ 
-  fontSize, 
-  onFontSizeChange,
- }: {
-  fontSize: number;
-  onFontSizeChange: (size: number) => void;
- }) => {
+const BookDetails = () => {
   const { id } = useParams();
   const [book, setBook] = useState<Book | null>(null);
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>();
