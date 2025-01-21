@@ -6,7 +6,10 @@ import { auth } from '../firebase/init';
 
 
 
-const ResetPassword = ({ toggleModal, modalState }) => {
+const ResetPassword = ({ toggleModal, modalState } :{
+  toggleModal: (modal: string) => void;
+  modalState: { isModalOpen: boolean; passwordModal: boolean; signupModal: boolean };
+}) => {
 
       const [email, setEmail] = useState<string>('');
       const [message, setMessage] = useState<string | null>(null);

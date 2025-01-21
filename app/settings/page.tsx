@@ -11,7 +11,13 @@ import Skeleton from "../components/Skeleton";
 
 
 
-const Settings = ({ fontSize, onFontSizeChange }) => {
+const Settings = ({ 
+  fontSize, 
+  onFontSizeChange,
+ }: {
+  fontSize: number;
+  onFontSizeChange: (size: number) => void;
+ }) => {
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>();
   const [userEmail, setUserEmail] = useState<string | null>(null);
   const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(false);

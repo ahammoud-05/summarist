@@ -15,7 +15,13 @@ import { ImSpinner8 } from "react-icons/im";
 
 
 
-const Signup = ({ toggleModal, modalState }) => {
+const Signup = ({
+  toggleModal,
+  modalState,
+}: {
+  toggleModal: (modal: string) => void;
+  modalState: { isModalOpen: boolean; passwordModal: boolean; signupModal: boolean };
+}) => {
   const router = useRouter();
 
   const [email, setEmail] = useState<string>("");

@@ -10,7 +10,13 @@ import Modals from '../components/Modals';
 
 
 
-const ForYou = ({ fontSize, onFontSizeChange }) => {
+const ForYou = ({ 
+  fontSize, 
+  onFontSizeChange,
+ }: {
+  fontSize: number;
+  onFontSizeChange: (size: number) => void;
+ }) => {
 
   const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(false);
 

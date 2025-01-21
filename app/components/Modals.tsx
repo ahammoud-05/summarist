@@ -6,7 +6,10 @@ import Signup from './Signup';
 
 
 
-const Modals = ({ toggleModal, modalState }) => {
+const Modals = ({ toggleModal, modalState }: {
+  toggleModal: (modal: string) => void;
+  modalState: { isModalOpen: boolean; passwordModal: boolean; signupModal: boolean };
+}) => {
 
   const isAnyModalOpen = modalState.isModalOpen || modalState.passwordModal || modalState.signupModal;
 

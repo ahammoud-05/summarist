@@ -17,7 +17,7 @@ interface Books {
 }
 
 
-const SearchBar = ({ toggleSidebar }) => {
+const SearchBar = ({ toggleSidebar }: {toggleSidebar: () => void;}) => {
 
   const [books, setBooks] = useState<Books[]>([]);
   const [search, setSearch] = useState<string>("");
