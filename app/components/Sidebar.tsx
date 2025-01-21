@@ -11,12 +11,14 @@ import { LuLogIn, LuLogOut } from "react-icons/lu";
 import { usePathname, useRouter } from "next/navigation";
 import { auth } from "../firebase/init";
 
+type ModalKeys = "signupModal" | "isModalOpen" | "passwordModal";
+
 
 const Sidebar = ({ fontSize, onFontSizeChange, toggleModal, modalState, isSidebarOpen} : {
   fontSize: number;
   onFontSizeChange: (size: number) => void;
-  toggleModal: (modal: string) => void;
-  modalState: { isModalOpen: boolean; passwordModal: boolean; signupModal: boolean };
+  toggleModal: (modal: ModalKeys | string) => void;
+  modalState: Record<ModalKeys, boolean>;
   isSidebarOpen: boolean;
 }) => {
 

@@ -4,11 +4,11 @@ import Footer from "./components/Footer";
 import Modals from "./components/Modals";
 import Main from "./main/page";
 
-
+type ModalKeys = "signupModal" | "isModalOpen" | "passwordModal";
 
 export default function Home() {
 
-const [modalState, setModalState] = useState({ 
+const [modalState, setModalState] = useState<Record<ModalKeys, boolean>>({ 
     isModalOpen: false, 
     passwordModal: false, 
     signupModal: false, 
@@ -17,6 +17,7 @@ const [modalState, setModalState] = useState({
     const toggleModal = (modal: keyof typeof modalState) => { setModalState((prev) => ({ ...prev,
       [modal]: !prev[modal] 
       })); };
+
     
   return (
     <>

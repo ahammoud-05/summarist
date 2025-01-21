@@ -5,7 +5,9 @@ import Image from 'next/image'
 
 
 
-const Landing = ({ toggleModal }) => {
+const Landing = ({ toggleModal }: {
+  toggleModal: boolean;
+}) => {
   return (
     <section id="landing">
       <div className="container">

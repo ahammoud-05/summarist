@@ -4,7 +4,7 @@ import Sidebar from '../components/Sidebar'
 
 
 
-const Library = ({ fontSize, onFontSizeChange }: { fontSize: number; onFontSizeChange: (size: number) => void;}) => {
+const Page = ({ fontSize, onFontSizeChange }: { fontSize: number; onFontSizeChange: (size: number) => void;}) => {
   return (
     <>
     <SearchBar />
@@ -29,4 +29,4 @@ const Library = ({ fontSize, onFontSizeChange }: { fontSize: number; onFontSizeC
   )
 }
 
-export default Library
+export default Page

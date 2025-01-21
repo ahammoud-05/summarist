@@ -13,14 +13,14 @@ import { useRouter } from "next/navigation";
 import { FirebaseError } from "firebase/app";
 import { ImSpinner8 } from "react-icons/im";
 
-
+type ModalKeys = "signupModal" | "isModalOpen" | "passwordModal";
 
 const Signup = ({
   toggleModal,
   modalState,
 }: {
-  toggleModal: (modal: string) => void;
-  modalState: { isModalOpen: boolean; passwordModal: boolean; signupModal: boolean };
+  toggleModal: (modal: ModalKeys | string) => void;
+  modalState: Record<ModalKeys, boolean>;
 }) => {
   const router = useRouter();
 

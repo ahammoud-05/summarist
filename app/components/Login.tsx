@@ -9,11 +9,11 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { ImSpinner8 } from 'react-icons/im';
 
-
+type ModalKeys = "signupModal" | "isModalOpen" | "passwordModal";
 
 const Login = ({ modalState, toggleModal }: {
-  toggleModal: (modal: string) => void;
-  modalState: { isModalOpen: boolean; passwordModal: boolean; signupModal: boolean };
+  toggleModal: (modal: ModalKeys | string) => void;
+  modalState: Record<ModalKeys, boolean>;
 }) => {
 
   const router = useRouter();

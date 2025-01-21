@@ -9,7 +9,7 @@ import Image from "next/image";
 import login from "../assets/login.png";
 import Skeleton from "../components/Skeleton";
 
-
+type ModalKeys = "isModalOpen" | "passwordModal" | "signupModal";
 
 const Settings = ({ 
   fontSize, 
@@ -23,15 +23,15 @@ const Settings = ({
   const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
-  const [modalState, setModalState] = useState({
+  const [modalState, setModalState] = useState<Record<ModalKeys, boolean>>({
     isModalOpen: false,
     passwordModal: false,
     signupModal: false,
   });
 
-  const toggleModal = (modal: keyof typeof modalState) => {
-    setModalState((prev) => ({ ...prev, [modal]: !prev[modal] }));
-  };
+  const toggleModal = (modal: keyof typeof modalState) => { setModalState((prev) => ({ ...prev,
+    [modal]: !prev[modal] 
+    })); };
 
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);

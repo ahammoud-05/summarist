@@ -4,11 +4,11 @@ import { IoClose } from 'react-icons/io5';
 import { sendPasswordResetEmail } from 'firebase/auth';
 import { auth } from '../firebase/init';
 
-
+type ModalKeys = "signupModal" | "isModalOpen" | "passwordModal";
 
 const ResetPassword = ({ toggleModal, modalState } :{
-  toggleModal: (modal: string) => void;
-  modalState: { isModalOpen: boolean; passwordModal: boolean; signupModal: boolean };
+  toggleModal: (modal: ModalKeys | string) => void;
+  modalState: Record<ModalKeys, boolean>;
 }) => {
 
       const [email, setEmail] = useState<string>('');

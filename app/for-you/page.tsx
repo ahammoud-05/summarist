@@ -8,9 +8,7 @@ import Suggested from '../components/Suggested';
 import Modals from '../components/Modals';
 
 
-
-
-const ForYou = ({ 
+const Page = ({ 
   fontSize, 
   onFontSizeChange,
  }: {
@@ -67,4 +65,4 @@ const ForYou = ({
   )
 }
 
-export default ForYou;
+export default Page;

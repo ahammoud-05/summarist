@@ -3,9 +3,6 @@ import Login from './Login';
 import ResetPassword from './ResetPassword';
 import Signup from './Signup';
 
-
-
-
 const Modals = ({ toggleModal, modalState }: {
   toggleModal: (modal: string) => void;
   modalState: { isModalOpen: boolean; passwordModal: boolean; signupModal: boolean };

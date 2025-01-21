@@ -28,20 +28,25 @@ interface Book {
   authorDescription: string;
 }
 
-interface SidebarProps {
-  fontSize: number;
-  onFontSizeChange: (size: number) => void;
-  modalState: {
-    isModalOpen: boolean;
-    passwordModal: boolean;
-    signupModal: boolean;
-  };
-  toggleModal: (modal: keyof SidebarProps["modalState"]) => void;
-  isSidebarOpen: boolean;
-  toggleSidebar: () => void;
-}
+// interface SidebarProps {
+//   fontSize: number;
+//   onFontSizeChange: (size: number) => void;
+//   modalState: {
+//     isModalOpen: boolean;
+//     passwordModal: boolean;
+//     signupModal: boolean;
+//   };
+//   toggleModal: (modal: keyof SidebarProps["modalState"]) => void;
+//   isSidebarOpen: boolean;
+//   toggleSidebar: () => void;
+// }
 
-const Player = () => {
+// type ModalKeys = "isModalOpen" | "passwordModal" | "signupModal";
+
+const Player = ({
+  modalState,
+  toggleModal,
+}) => {
   const { id } = useParams();
   const [book, setBook] = useState<Book | null>(null);
   const [fontSize, setFontSize] = useState<number>(16);
@@ -69,19 +74,21 @@ const Player = () => {
     fetchData();
   }, [id]);
 
-  const [modalState, setModalState] = useState({
-    isModalOpen: false,
-    passwordModal: false,
-    signupModal: false,
-  });
+  // const [modalState, setModalState] = useState<Record<ModalKeys, boolean>>({
+  //   isModalOpen: false,
+  //   passwordModal: false,
+  //   signupModal: false,
+  // });
+
+  // const toggleModal = (modal: keyof typeof modalState) => { setModalState((prev) => ({ ...prev,
+  //   [modal]: !prev[modal] 
+  //   })); };
 
   const onFontSizeChange = (size: number) => {
     setFontSize(size)
   }
 
-  const toggleModal = (modal: keyof typeof modalState) => {
-    setModalState((prev) => ({ ...prev, [modal]: !prev[modal] }));
-  };
+
 
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);

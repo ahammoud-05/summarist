@@ -33,6 +33,7 @@ interface Book {
   authorDescription: string;
 }
 
+type ModalKeys = "isModalOpen" | "passwordModal" | "signupModal";
 
 const BookDetails = ({ 
   fontSize, 
@@ -64,15 +65,15 @@ const BookDetails = ({
     fetchData();
   }, [id]);
 
-  const [modalState, setModalState] = useState({
+  const [modalState, setModalState] = useState<Record<ModalKeys, boolean>>({
     isModalOpen: false,
     passwordModal: false,
     signupModal: false,
   });
 
-  const toggleModal = (modal: keyof typeof modalState) => {
-    setModalState((prev) => ({ ...prev, [modal]: !prev[modal] }));
-  };
+  const toggleModal = (modal: ModalKeys) => { setModalState((prev) => ({ ...prev,
+    [modal]: !prev[modal] 
+    })); };
 
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
@@ -94,8 +95,6 @@ const BookDetails = ({
     <>
       <div className="fy__content--wrapper">
         <SearchBar
-          fontSize={fontSize}
-          onFontSizeChange={onFontSizeChange}
           toggleModal={toggleModal}
           modalState={modalState}
           toggleSidebar={toggleSidebar}
@@ -103,8 +102,6 @@ const BookDetails = ({
         />
         <Modals toggleModal={toggleModal} modalState={modalState} />
         <Sidebar
-          fontSize={fontSize}
-          onFontSizeChange={onFontSizeChange}
           toggleModal={toggleModal}
           modalState={modalState}
           toggleSidebar={toggleSidebar}

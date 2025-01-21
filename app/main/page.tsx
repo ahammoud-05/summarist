@@ -7,17 +7,20 @@ import Reviews from "../components/Reviews";
 import Numbers from "../components/Numbers";
 import Modals from "../components/Modals";
 
+type ModalKeys = "isModalOpen" | "passwordModal" | "signupModal";
+
 const Main = () => {
 
-  const [modalState, setModalState] = useState({
+  const [modalState, setModalState] = useState<Record<ModalKeys, boolean>>({
     isModalOpen: false,
     passwordModal: false,
     signupModal: false,
   });
 
-  const toggleModal = (modal: keyof typeof modalState) => {
-    setModalState((prev) => ({ ...prev, [modal]: !prev[modal] }));
-  };
+  const toggleModal = (modal: keyof typeof modalState) => { setModalState((prev) => ({ ...prev,
+    [modal]: !prev[modal] 
+    })); };
+
 
   return (
 
