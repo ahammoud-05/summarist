@@ -2,11 +2,11 @@ import React from 'react'
 import landing from '../assets/landing.png'
 import Image from 'next/image'
 
+type ModalKeys = "isModalOpen" | "passwordModal" | "signupModal";
 
-
-
-const Landing = ({ toggleModal }: {
-  toggleModal: boolean;
+const Landing = ({ toggleModal, modalState }: {
+  toggleModal: (modal: ModalKeys) => void;
+  modalState: Record<ModalKeys, boolean>;
 }) => {
   return (
     <section id="landing">

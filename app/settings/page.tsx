@@ -57,14 +57,9 @@ const Settings = ({
   return (
     <>
       <div className="fy__content--wrapper">
-        <SearchBar
-          toggleSidebar={toggleSidebar}
-          isSidebarOpen={isSidebarOpen}
-          fontSize={fontSize}
-          onFontSizeChange={onFontSizeChange}
-          modalState={modalState}
-          toggleModal={toggleModal}
-        />
+      <SearchBar 
+      toggleSidebar={toggleSidebar}
+      />
         <Sidebar
           toggleSidebar={toggleSidebar}
           isSidebarOpen={isSidebarOpen}

@@ -65,9 +65,9 @@ const BookDetails = () => {
     signupModal: false,
   });
 
-  const toggleModal = (modal: ModalKeys) => { setModalState((prev) => ({ ...prev,
-    [modal]: !prev[modal] 
-    })); };
+  const toggleModal = (modal: ModalKeys) => {
+    setModalState((prev) => ({ ...prev, [modal]: !prev[modal] }));
+  };
 
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
@@ -88,18 +88,13 @@ const BookDetails = () => {
   return (
     <>
       <div className="fy__content--wrapper">
-        <SearchBar
-          toggleModal={toggleModal}
-          modalState={modalState}
-          toggleSidebar={toggleSidebar}
-          isSidebarOpen={isSidebarOpen}
-        />
+        <SearchBar toggleSidebar={toggleSidebar} />
         <Modals toggleModal={toggleModal} modalState={modalState} />
         <Sidebar
-          toggleModal={toggleModal}
-          modalState={modalState}
           toggleSidebar={toggleSidebar}
           isSidebarOpen={isSidebarOpen}
+          modalState={modalState}
+          toggleModal={toggleModal}
         />
         <div className="row">
           <div className="container">
@@ -241,13 +236,13 @@ const BookDetails = () => {
                   </div>
                 )}
                 <div className="inner__book--secondary-title">
-                {isLoading ? (
-                  <Skeleton width="50%" height="20px" borderRadius="4px" />
-                ) : (
-                  <div className="inner__book--secondary-title">
-                    What's it about?
-                  </div>
-                )}
+                  {isLoading ? (
+                    <Skeleton width="50%" height="20px" borderRadius="4px" />
+                  ) : (
+                    <div className="inner__book--secondary-title">
+                      What's it about?
+                    </div>
+                  )}
                 </div>
                 {isLoading ? (
                   <Skeleton width="100%" height="100%" borderRadius="4px" />
@@ -274,15 +269,14 @@ const BookDetails = () => {
               </div>
               <div className="inner__book--img-wrapper">
                 <figure className="selected-book__img--wrapper">
-                  { isLoading ? (
+                  {isLoading ? (
                     <Skeleton width="100%" height="100%" borderRadius="4px" />
                   ) : (
                     <img
-                    className="selected-book__img"
-                    src={book?.imageLink}
-                  ></img>
+                      className="selected-book__img"
+                      src={book?.imageLink}
+                    ></img>
                   )}
-                  
                 </figure>
               </div>
             </div>

@@ -8,22 +8,32 @@ import { RiBallPenLine, RiFontSize } from "react-icons/ri";
 import { IoSearchOutline } from "react-icons/io5";
 import { FiHelpCircle } from "react-icons/fi";
 import { LuLogIn, LuLogOut } from "react-icons/lu";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { auth } from "../firebase/init";
 
 type ModalKeys = "signupModal" | "isModalOpen" | "passwordModal";
 
 
-const Sidebar = ({ fontSize, onFontSizeChange, toggleModal, modalState, isSidebarOpen} : {
-  fontSize: number;
-  onFontSizeChange: (size: number) => void;
-  toggleModal: (modal: ModalKeys | string) => void;
+const Sidebar = ({
+  toggleModal,
+  modalState,
+  isSidebarOpen,
+  fontSize = 16,
+  onFontSizeChange = () => {},
+  toggleSidebar,
+}: {
+  toggleModal: (modal: ModalKeys) => void;
   modalState: Record<ModalKeys, boolean>;
   isSidebarOpen: boolean;
+  fontSize?: number;
+  onFontSizeChange?: (size: number) => void;
+  toggleSidebar: () => void;
 }) => {
 
   const pathname = usePathname();
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>();
+
+
 
   useEffect(() => {
     const logOut = auth.onAuthStateChanged((user) => {

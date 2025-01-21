@@ -14,9 +14,9 @@ const [modalState, setModalState] = useState<Record<ModalKeys, boolean>>({
     signupModal: false, 
     });
 
-    const toggleModal = (modal: keyof typeof modalState) => { setModalState((prev) => ({ ...prev,
-      [modal]: !prev[modal] 
-      })); };
+    const toggleModal = (modal: ModalKeys) => {
+      setModalState((prev) => ({ ...prev, [modal]: !prev[modal] }));
+    };
 
     
   return (

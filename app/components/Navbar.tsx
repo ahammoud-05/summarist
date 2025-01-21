@@ -1,8 +1,12 @@
 import Image from 'next/image'
 import logo from '../assets/logo.png'
 
+type ModalKeys = "isModalOpen" | "passwordModal" | "signupModal";
 
-const Navbar = ({ toggleModal }) => {
+const Navbar = ({ toggleModal, modalState }: {
+  toggleModal: (modal: ModalKeys) => void;
+  modalState: Record<ModalKeys, boolean>;
+}) => {
 
   return (
     <>

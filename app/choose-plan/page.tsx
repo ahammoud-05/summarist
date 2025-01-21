@@ -12,7 +12,6 @@ const Upgrade = () => {
 
     const [isFaqOpen, setIsFaqOpen] = useState<number | null>(0)
     const [selectedPlan, setSelectedPlan] = useState<number>(0);
-    const [isLoading, setIsLoading] = useState<boolean>(false);
 
     const handleFaqClick = (index: number) => {
         setIsFaqOpen(isFaqOpen === index ? null : index)

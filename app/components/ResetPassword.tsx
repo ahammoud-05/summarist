@@ -7,7 +7,7 @@ import { auth } from '../firebase/init';
 type ModalKeys = "signupModal" | "isModalOpen" | "passwordModal";
 
 const ResetPassword = ({ toggleModal, modalState } :{
-  toggleModal: (modal: ModalKeys | string) => void;
+  toggleModal: (modal: ModalKeys) => void;
   modalState: Record<ModalKeys, boolean>;
 }) => {
 

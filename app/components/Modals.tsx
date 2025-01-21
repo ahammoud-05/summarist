@@ -3,9 +3,11 @@ import Login from './Login';
 import ResetPassword from './ResetPassword';
 import Signup from './Signup';
 
+type ModalKeys = "signupModal" | "isModalOpen" | "passwordModal";
+
 const Modals = ({ toggleModal, modalState }: {
-  toggleModal: (modal: string) => void;
-  modalState: { isModalOpen: boolean; passwordModal: boolean; signupModal: boolean };
+  toggleModal: (modal: ModalKeys) => void;
+  modalState: Record<ModalKeys, boolean>;
 }) => {
 
   const isAnyModalOpen = modalState.isModalOpen || modalState.passwordModal || modalState.signupModal;

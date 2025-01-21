@@ -17,7 +17,7 @@ const Main = () => {
     signupModal: false,
   });
 
-  const toggleModal = (modal: keyof typeof modalState) => { setModalState((prev) => ({ ...prev,
+  const toggleModal = (modal: ModalKeys) => { setModalState((prev) => ({ ...prev,
     [modal]: !prev[modal] 
     })); };
 

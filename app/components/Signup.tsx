@@ -19,7 +19,7 @@ const Signup = ({
   toggleModal,
   modalState,
 }: {
-  toggleModal: (modal: ModalKeys | string) => void;
+  toggleModal: (modal: ModalKeys) => void;
   modalState: Record<ModalKeys, boolean>;
 }) => {
   const router = useRouter();

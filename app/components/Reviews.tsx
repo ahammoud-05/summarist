@@ -1,8 +1,12 @@
 import React from 'react'
 import { BsStarFill } from 'react-icons/bs'
 
+type ModalKeys = "isModalOpen" | "passwordModal" | "signupModal";
 
-const Reviews = ({ toggleModal }) => {
+const Reviews = ({ toggleModal, modalState }: {
+  toggleModal: (modal: ModalKeys) => void;
+  modalState: Record<ModalKeys, boolean>;
+}) => {
   return (
     <section id="reviews">
       <div className="row">

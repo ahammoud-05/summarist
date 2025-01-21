@@ -7,8 +7,8 @@ import Recommended from '../components/Recommended';
 import Suggested from '../components/Suggested';
 import Modals from '../components/Modals';
 
-
-const Page = () => {
+type ModalKeys = "signupModal" | "isModalOpen" | "passwordModal";
+const ForYou = () => {
 
   const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(false);
 
@@ -18,9 +18,9 @@ const Page = () => {
       signupModal: false, 
       });
   
-      const toggleModal = (modal: keyof typeof modalState) => { setModalState((prev) => ({ ...prev,
-        [modal]: !prev[modal] 
-        })); };
+      const toggleModal = (modal: ModalKeys) => {
+        setModalState((prev) => ({ ...prev, [modal]: !prev[modal] }));
+      };
 
         const toggleSidebar = () => {
           setIsSidebarOpen(!isSidebarOpen);
@@ -30,18 +30,13 @@ const Page = () => {
     <div className="fy__content--wrapper">
     <SearchBar 
     toggleSidebar={toggleSidebar}
-    isSidebarOpen={isSidebarOpen} 
-    // fontSize={fontSize} 
-    // onFontSizeChange={onFontSizeChange} 
-    modalState={modalState}
-    toggleModal={toggleModal}  />
-      <Sidebar
-    toggleSidebar={toggleSidebar}
-    isSidebarOpen={isSidebarOpen} 
-    // fontSize={fontSize} 
-    // onFontSizeChange={onFontSizeChange} 
-    modalState={modalState}
-    toggleModal={toggleModal} />
+      />
+        <Sidebar
+          toggleSidebar={toggleSidebar}
+          isSidebarOpen={isSidebarOpen}
+          modalState={modalState}
+          toggleModal={toggleModal}
+        />
     
     <div className="fy__container">
       <div className="fy__row">
@@ -54,9 +49,12 @@ const Page = () => {
         <Suggested />
       </div>
     </div>
-    <Modals toggleModal={toggleModal} modalState={modalState}/>
+    <Modals 
+    toggleModal={toggleModal} 
+    modalState={modalState}
+    />
     </div>
   )
 }
 
-export default Page;
+export default ForYou;

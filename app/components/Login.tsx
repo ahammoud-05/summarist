@@ -12,7 +12,7 @@ import { ImSpinner8 } from 'react-icons/im';
 type ModalKeys = "signupModal" | "isModalOpen" | "passwordModal";
 
 const Login = ({ modalState, toggleModal }: {
-  toggleModal: (modal: ModalKeys | string) => void;
+  toggleModal: (modal: ModalKeys) => void;
   modalState: Record<ModalKeys, boolean>;
 }) => {
 
