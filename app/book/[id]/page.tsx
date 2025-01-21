@@ -33,20 +33,9 @@ interface Book {
   authorDescription: string;
 }
 
-interface SidebarProps {
-  isSidebarOpen: boolean;
-  toggleSidebar: () => void;
-  fontSize: number;
-  onFontSizeChange: (size: number) => void;
-  modalState: {
-    isModalOpen: boolean;
-    passwordModal: boolean;
-    signupModal: boolean;
-  };
-  toggleModal: (modal: keyof SidebarProps["modalState"]) => void;
-}
 
-const BookDetails = ({ fontSize, onFontSizeChange }: SidebarProps) => {
+
+const BookDetails = ({ fontSize, onFontSizeChange }) => {
   const { id } = useParams();
   const [book, setBook] = useState<Book | null>(null);
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>();
