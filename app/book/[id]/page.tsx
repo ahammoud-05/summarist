@@ -33,9 +33,12 @@ interface Book {
   authorDescription: string;
 }
 
+interface BookDetailsProps {
+  fontSize: number;
+  onFontSizeChange: (size: number) => void;
+}
 
-
-const BookDetails = ({ fontSize, onFontSizeChange }) => {
+const BookDetails = ({ fontSize, onFontSizeChange }: BookDetailsProps) => {
   const { id } = useParams();
   const [book, setBook] = useState<Book | null>(null);
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>();

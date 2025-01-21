@@ -28,7 +28,7 @@ interface SidebarProps {
   isSidebarOpen: boolean;
   toggleSidebar: () => void;
 }
-const SearchBar = ({ toggleSidebar, isSidebarOpen }: SidebarProps) => {
+const SearchBar = ({ toggleSidebar }: SidebarProps) => {
 
   const [books, setBooks] = useState<Books[]>([]);
   const [search, setSearch] = useState<string>("");
