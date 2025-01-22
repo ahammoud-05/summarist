@@ -11,13 +11,7 @@ import Skeleton from "../components/Skeleton";
 
 type ModalKeys = "isModalOpen" | "passwordModal" | "signupModal";
 
-const Settings = ({ 
-  fontSize, 
-  onFontSizeChange,
- }: {
-  fontSize: number;
-  onFontSizeChange: (size: number) => void;
- }) => {
+const Settings = () => {
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>();
   const [userEmail, setUserEmail] = useState<string | null>(null);
   const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(false);
