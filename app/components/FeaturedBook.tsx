@@ -44,7 +44,7 @@ const FeaturedBook = () => {
         featuredBook.map((item) => (
           <div key={item.id} className="featured__book--wrapper">
             
-            <div className="featured__book--container">
+           
               <a href={`/book/${item.id}`} className="featured__book">
                 <div className="featured__book--subtitle">{item.subTitle}</div>
                 <div className="featured__book--line"></div>
@@ -71,7 +71,7 @@ const FeaturedBook = () => {
                   </div>
                 </div>
               </a>
-            </div>
+            
           </div>
         ))
       )}

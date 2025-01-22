@@ -38,8 +38,8 @@ const ForYou = () => {
           toggleModal={toggleModal}
         />
     
-    <div className="fy__container">
-      <div className="fy__row">
+    <div className="row">
+      <div className="container">
         <FeaturedBook />
         <div className="fy__title">Recommended For You</div>
         <div className="fy__subtitle">We think you'll like these</div>
