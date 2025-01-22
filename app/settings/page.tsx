@@ -63,8 +63,6 @@ const Settings = ({
         <Sidebar
           toggleSidebar={toggleSidebar}
           isSidebarOpen={isSidebarOpen}
-          fontSize={fontSize}
-          onFontSizeChange={onFontSizeChange}
           modalState={modalState}
           toggleModal={toggleModal}
         />
