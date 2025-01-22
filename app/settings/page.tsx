@@ -33,18 +33,16 @@ const Settings = () => {
 
   useEffect(() => {
     const loggedIn = auth.onAuthStateChanged((user) => {
-      setIsLoggedIn(!!user);
-      if (user) {
+      if (user && user.email) {
+        setIsLoggedIn(true);
         setUserEmail(user.email);
-      }
-      if (user && modalState.isModalOpen) {
-        toggleModal("isModalOpen");
       } else {
+        setIsLoggedIn(false);
         setUserEmail(null);
       }
       setIsLoading(false);
     });
-
+  
     return () => loggedIn();
   }, [modalState, toggleModal]);
 
