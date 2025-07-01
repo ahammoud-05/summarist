@@ -31,8 +31,7 @@ const Sidebar = ({
 }) => {
 
   const pathname = usePathname();
-  const [isLoggedIn, setIsLoggedIn] = useState<boolean>();
-
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(!!auth.currentUser);
 
 
   useEffect(() => {

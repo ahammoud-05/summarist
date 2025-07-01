@@ -118,8 +118,8 @@ const Login = ({ modalState, toggleModal }: {
             <hr className='line1 line' /> or <hr className='line2 line' />
           </div>
           <form onSubmit={handleSubmit} className='modal__form'>
-            <input onChange={(event) => setEmail(event.target.value)} className='modal__input' type='email' placeholder='Email Address' />
-            <input onChange={(event) => setPassword(event.target.value)} className='modal__input' type='password' placeholder='Password' />
+            <input onInput={(event) => setEmail((event.target as HTMLInputElement).value)} className='modal__input' type='email' placeholder='Email Address' />
+            <input onInput={(event) => setPassword((event.target as HTMLInputElement).value)} className='modal__input' type='password' placeholder='Password' />
             <button type='submit' className='modal__btn'>
               {isLoading ? (
                 <div className="button__spinner">
