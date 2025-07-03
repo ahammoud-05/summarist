@@ -13,7 +13,6 @@ import { auth } from "../firebase/init";
 
 type ModalKeys = "signupModal" | "isModalOpen" | "passwordModal";
 
-
 const Sidebar = ({
   toggleModal,
   modalState,
@@ -29,40 +28,38 @@ const Sidebar = ({
   onFontSizeChange?: (size: number) => void;
   toggleSidebar: () => void;
 }) => {
-
   const pathname = usePathname();
-  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(!!auth.currentUser);
 
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean | null>(null);
 
   useEffect(() => {
-    const logOut = auth.onAuthStateChanged((user) => {
+    const unsubscribe = auth.onAuthStateChanged((user) => {
       setIsLoggedIn(!!user);
 
       if (user && modalState.isModalOpen) {
-        toggleModal("isModalOpen")
+        toggleModal("isModalOpen");
       }
-    })
+    });
 
-    return () => logOut();
+    return () => unsubscribe();
   }, [modalState, toggleModal]);
 
   const handleLogOut = async () => {
-        try {
-          await auth.signOut();
-          console.log("Signed out.")
-        } catch(error) {
-          console.log("Theres an error")
-        }
-      }
-
+    try {
+      await auth.signOut();
+      console.log("Signed out.");
+    } catch (error) {
+      console.error("Error during logout:", error);
+    }
+  };
 
   return (
-    <>
-    <div className={`sidebar__container ${ isSidebarOpen ? "open" : "closed"}`}>
+    <div className={`sidebar__container ${isSidebarOpen ? "open" : "closed"}`}>
       <div className="sidebar__content">
         <div className="sidebar__img--wrapper">
           <Image width={160} height={40} src={logo} alt="logo" />
         </div>
+
         <div className="sidebar__top">
           <a href="/for-you" className="sidebar__link--wrapper sidebar__hover">
             <div
@@ -75,7 +72,8 @@ const Sidebar = ({
             </div>
             <div className="sidebar__link--text">For You</div>
           </a>
-          <a href="" className="sidebar__link--wrapper sidebar__not-allowed">
+
+          <a href="#" className="sidebar__link--wrapper sidebar__not-allowed">
             <div
               className={`sidebar__link--line ${
                 pathname === "/library" ? "active--tab" : ""
@@ -94,6 +92,7 @@ const Sidebar = ({
             </div>
             <div className="sidebar__link--text">Highlights</div>
           </div>
+
           <div className="sidebar__link--wrapper sidebar__not-allowed">
             <div className="sidebar__link--line"></div>
             <div className="sidebar__icon--wrapper">
@@ -101,6 +100,7 @@ const Sidebar = ({
             </div>
             <div className="sidebar__link--text">Search</div>
           </div>
+
           {pathname.startsWith("/player/") && (
             <div className="sidebar__link--wrapper sidebar__font--size-wrapper">
               {[16, 20, 24, 28].map((size) => (
@@ -117,16 +117,20 @@ const Sidebar = ({
             </div>
           )}
         </div>
+
         <div className="sidebar__bottom">
           <a href="/settings" className="sidebar__link--wrapper sidebar__hover">
-            <div className={`sidebar__link--line ${
+            <div
+              className={`sidebar__link--line ${
                 pathname === "/settings" ? "active--tab" : ""
-              }`}></div>
+              }`}
+            ></div>
             <div className="sidebar__icon--wrapper">
               <CiSettings className="settings__icon" />
             </div>
             <div className="sidebar__link--text">Settings</div>
           </a>
+
           <div className="sidebar__link--wrapper sidebar__not-allowed">
             <div className="sidebar__link--line"></div>
             <div className="sidebar__icon--wrapper">
@@ -134,30 +138,35 @@ const Sidebar = ({
             </div>
             <div className="sidebar__link--text">Help & Support</div>
           </div>
-              {isLoggedIn ? 
-              <div onClick={handleLogOut} className="sidebar__link--wrapper sidebar__hover">
-            <div className="sidebar__link--line"></div>
-            <div className="sidebar__icon--wrapper">
-              <LuLogOut />
-            </div>
-            <div className="sidebar__link--text">Logout</div>
-          </div>
-          :
-          <div onClick={() => toggleModal("isModalOpen")} className="sidebar__link--wrapper sidebar__hover">
-            <div className="sidebar__link--line"></div>
-            <div className="sidebar__icon--wrapper">
-              <LuLogIn />
-            </div>
-            <div className="sidebar__link--text">Login</div>
-          </div>
-          }
-          
 
+          {isLoggedIn === null ? null : isLoggedIn ? (
+            <div
+              onClick={handleLogOut}
+              className="sidebar__link--wrapper sidebar__hover"
+            >
+              <div className="sidebar__link--line"></div>
+              <div className="sidebar__icon--wrapper">
+                <LuLogOut />
+              </div>
+              <div className="sidebar__link--text">Logout</div>
+            </div>
+          ) : (
+            <div
+              onClick={() => toggleModal("isModalOpen")}
+              className="sidebar__link--wrapper sidebar__hover"
+            >
+              <div className="sidebar__link--line"></div>
+              <div className="sidebar__icon--wrapper">
+                <LuLogIn />
+              </div>
+              <div className="sidebar__link--text">Login</div>
+            </div>
+          )}
         </div>
       </div>
     </div>
-    </>
   );
 };
 
 export default Sidebar;
+

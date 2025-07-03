@@ -1,30 +1,33 @@
-import Image from 'next/image'
-import logo from '../assets/logo.png'
+"use client";
 
-type ModalKeys = "isModalOpen" | "passwordModal" | "signupModal";
+import Image from "next/image";
+import logo from "../assets/logo.png";
+import { useDispatch } from "react-redux";
+import { toggleModal } from "@/app/features/modal/modalSlice";
 
-const Navbar = ({ toggleModal, modalState }: {
-  toggleModal: (modal: ModalKeys) => void;
-  modalState: Record<ModalKeys, boolean>;
-}) => {
+const Navbar = () => {
+  const dispatch = useDispatch();
 
   return (
-    <>
     <nav className="nav">
-    <div className="nav__wrapper">
-      <figure className="nav__img--mask">
-        <Image className="nav__img" src={logo} alt="logo" />
-      </figure>
-      <ul className="nav__list--wrapper">
-        <li className="nav__list nav__list--login" onClick={() => toggleModal("isModalOpen")}>Login</li>
-        <li className="nav__list nav__list--mobile">About</li>
-        <li className="nav__list nav__list--mobile">Contact</li>
-        <li className="nav__list nav__list--mobile">Help</li>
-      </ul>
-    </div>
-  </nav>
-  </>
-  )
-}
+      <div className="nav__wrapper">
+        <figure className="nav__img--mask">
+          <Image className="nav__img" src={logo} alt="logo" />
+        </figure>
+        <ul className="nav__list--wrapper">
+          <li
+            className="nav__list nav__list--login"
+            onClick={() => dispatch(toggleModal("isModalOpen"))}
+          >
+            Login
+          </li>
+          <li className="nav__list nav__list--mobile">About</li>
+          <li className="nav__list nav__list--mobile">Contact</li>
+          <li className="nav__list nav__list--mobile">Help</li>
+        </ul>
+      </div>
+    </nav>
+  );
+};
 
-export default Navbar
+export default Navbar;

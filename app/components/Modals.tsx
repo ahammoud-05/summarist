@@ -1,40 +1,37 @@
-import React from 'react';
-import Login from './Login';
-import ResetPassword from './ResetPassword';
-import Signup from './Signup';
+"use client";
 
-type ModalKeys = "signupModal" | "isModalOpen" | "passwordModal";
+import React from "react";
+import Login from "./Login";
+import ResetPassword from "./ResetPassword";
+import Signup from "./Signup";
 
-const Modals = ({ toggleModal, modalState }: {
-  toggleModal: (modal: ModalKeys) => void;
-  modalState: Record<ModalKeys, boolean>;
-}) => {
+import { useSelector, useDispatch } from "react-redux";
+import { RootState } from "@/app/store";
+import { toggleModal } from "@/app/features/modal/modalSlice";
 
-  const isAnyModalOpen = modalState.isModalOpen || modalState.passwordModal || modalState.signupModal;
+const Modals = () => {
+  const dispatch = useDispatch();
+  const modalState = useSelector((state: RootState): RootState["modal"] => state.modal);
+
+  const isAnyModalOpen =
+    modalState.isModalOpen || modalState.passwordModal || modalState.signupModal;
+
+  const handleOverlayClick = () => {
+    if (modalState.isModalOpen) dispatch(toggleModal("isModalOpen"));
+    if (modalState.passwordModal) dispatch(toggleModal("passwordModal"));
+    if (modalState.signupModal) dispatch(toggleModal("signupModal"));
+    console.log("modal overlay clicked");
+  };
 
   return (
     <>
-      {/* Modal Overlay */}
       {isAnyModalOpen && (
-        <div
-          className="modal__overlay--background"
-          onClick={() => {
-            if (modalState.isModalOpen) toggleModal("isModalOpen")
-            if (modalState.passwordModal) toggleModal("passwordModal")
-            if (modalState.signupModal) toggleModal("signupModal")
-              console.log("modal clicked")
-          }}
-        ></div>
+        <div className="modal__overlay--background" onClick={handleOverlayClick}></div>
       )}
 
-      {/* Login Modal */}
-      <Login modalState={modalState} toggleModal={toggleModal} />
-
-      {/* Reset Password Modal */}
-     <ResetPassword modalState={modalState} toggleModal={toggleModal} />
-
-      {/* Sign Up Modal */}
-      <Signup modalState={modalState} toggleModal={toggleModal} />
+      <Login />
+      <ResetPassword />
+      <Signup />
     </>
   );
 };

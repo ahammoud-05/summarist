@@ -1,13 +1,13 @@
-import React from 'react'
-import landing from '../assets/landing.png'
-import Image from 'next/image'
+"use client";
+import React from "react";
+import landing from "../assets/landing.png";
+import Image from "next/image";
+import { useDispatch } from "react-redux";
+import { toggleModal } from "@/app/features/modal/modalSlice";
 
-type ModalKeys = "isModalOpen" | "passwordModal" | "signupModal";
+const Landing = () => {
+  const dispatch = useDispatch();
 
-const Landing = ({ toggleModal, modalState }: {
-  toggleModal: (modal: ModalKeys) => void;
-  modalState: Record<ModalKeys, boolean>;
-}) => {
   return (
     <section id="landing">
       <div className="container">
@@ -25,7 +25,12 @@ const Landing = ({ toggleModal, modalState }: {
                 <br className="remove--tablet" />
                 and even people who don’t like to read.
               </div>
-              <button onClick={() => toggleModal("isModalOpen")} className="btn home__cta--btn">Login</button>
+              <button
+                onClick={() => dispatch(toggleModal("isModalOpen"))}
+                className="btn home__cta--btn"
+              >
+                Login
+              </button>
             </div>
             <figure className="landing__image--mask">
               <Image src={landing} alt="landing" />
@@ -34,7 +39,7 @@ const Landing = ({ toggleModal, modalState }: {
         </div>
       </div>
     </section>
-  )
-}
+  );
+};
 
-export default Landing
+export default Landing;

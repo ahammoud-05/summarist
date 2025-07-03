@@ -1,12 +1,12 @@
 import React from 'react'
 import { BsStarFill } from 'react-icons/bs'
+import { useDispatch } from "react-redux";
+import { toggleModal } from "@/app/features/modal/modalSlice";
 
-type ModalKeys = "isModalOpen" | "passwordModal" | "signupModal";
+const Reviews = () => {
 
-const Reviews = ({ toggleModal, modalState }: {
-  toggleModal: (modal: ModalKeys) => void;
-  modalState: Record<ModalKeys, boolean>;
-}) => {
+  const dispatch = useDispatch();
+
   return (
     <section id="reviews">
       <div className="row">
@@ -85,7 +85,7 @@ const Reviews = ({ toggleModal, modalState }: {
             </div>
           </div>
           <div className="reviews__btn--wrapper">
-            <button onClick={() => toggleModal("isModalOpen")} className="btn home__cta--btn">Login</button>
+            <button onClick={() => dispatch(toggleModal("isModalOpen"))} className="btn home__cta--btn">Login</button>
           </div>
         </div>
       </div>
