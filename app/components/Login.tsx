@@ -10,6 +10,7 @@ import {
   signInWithEmailAndPassword,
   GoogleAuthProvider,
   signInWithPopup,
+  signInAnonymously,
 } from "firebase/auth";
 import { auth } from "../firebase/init";
 import google from "../assets/google.png";
@@ -34,6 +35,16 @@ const Login = () => {
       router.push("/for-you");
     } catch (error) {
       console.error("Google login error:", error);
+    }
+  };
+
+  const handleGuestLogin = async () => {
+    try {
+      await signInAnonymously(auth);
+      dispatch(closeAll());
+      router.push("/for-you");
+    } catch (error) {
+      console.error("Guest login error:", error);
     }
   };
 
@@ -96,14 +107,12 @@ const Login = () => {
         <h3 className="modal__title">Login to Summarist</h3>
 
         <div className="google__login--wrapper">
-          <Link href="/for-you">
-            <button className="guest__login--btn">
-              <figure className="guest__login--icon-wrapper">
-                <IoPersonSharp className="guest__login--icon" />
-              </figure>
-              Login as Guest
-            </button>
-          </Link>
+          <button className="guest__login--btn" onClick={handleGuestLogin}>
+            <figure className="guest__login--icon-wrapper">
+              <IoPersonSharp className="guest__login--icon" />
+            </figure>
+            Login as Guest
+          </button>
         </div>
 
         <div className="modal__seperator">

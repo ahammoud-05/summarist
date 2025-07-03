@@ -17,8 +17,9 @@ const Settings = () => {
   const dispatch = useDispatch();
   const modalState = useSelector((state: RootState) => state.modal);
 
-  const [isLoggedIn, setIsLoggedIn] = useState<boolean>();
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
   const [userEmail, setUserEmail] = useState<string | null>(null);
+  const [isGuest, setIsGuest] = useState<boolean>(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
@@ -28,12 +29,14 @@ const Settings = () => {
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
-      if (user && user.email) {
+      if (user) {
         setIsLoggedIn(true);
-        setUserEmail(user.email);
+        setUserEmail(user.email || null);
+        setIsGuest(user.isAnonymous);
       } else {
         setIsLoggedIn(false);
         setUserEmail(null);
+        setIsGuest(false);
       }
       setIsLoading(false);
     });
@@ -73,7 +76,7 @@ const Settings = () => {
                 </div>
                 <div className="setting__content">
                   <div className="settings__subtitle">Email</div>
-                  <div className="settings__text">{userEmail || "guest@gmail.com"}</div>
+                  <div className="settings__text">{userEmail || "guest@summarist.com"}</div>
                 </div>
               </>
             ) : (

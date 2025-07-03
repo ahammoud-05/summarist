@@ -30,12 +30,15 @@ const Signup = () => {
 
   const handleGoogleLogin = async () => {
     const provider = new GoogleAuthProvider();
+    provider.setCustomParameters({ prompt: "select_account" });
+
     try {
       await signInWithPopup(auth, provider);
       dispatch(closeAll());
       router.push("/for-you");
     } catch (error) {
       console.error("Google signup error:", error);
+      setError("Google signup failed.");
     }
   };
 
@@ -96,11 +99,7 @@ const Signup = () => {
         <div className="google__signup--wrapper">
           <button onClick={handleGoogleLogin} className="google__signup--btn">
             <figure className="google__signup--icon-wrapper">
-              <Image
-                src={google}
-                alt="google"
-                className="google__signup--icon"
-              />
+              <Image src={google} alt="google" className="google__signup--icon" />
             </figure>
             Signup with Google
           </button>
