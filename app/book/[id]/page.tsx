@@ -14,6 +14,10 @@ import { IoStarOutline } from "react-icons/io5";
 import { MdMenuBook } from "react-icons/md";
 import { TiMicrophoneOutline } from "react-icons/ti";
 
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "@/app/store";
+import { toggleModal } from "@/app/features/modal/modalSlice";
+
 interface Book {
   id: string;
   author: string;
@@ -33,10 +37,11 @@ interface Book {
   authorDescription: string;
 }
 
-type ModalKeys = "isModalOpen" | "passwordModal" | "signupModal";
-
 const BookDetails = () => {
   const { id } = useParams();
+  const dispatch = useDispatch();
+  const modalState = useSelector((state: RootState) => state.modal);
+
   const [book, setBook] = useState<Book | null>(null);
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>();
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -52,50 +57,36 @@ const BookDetails = () => {
         setIsLoading(false);
       } catch (error) {
         setIsLoading(false);
-        return <div>Error fetching book.</div>;
+        console.error("Error fetching book:", error);
       }
     };
 
     fetchData();
   }, [id]);
 
-  const [modalState, setModalState] = useState<Record<ModalKeys, boolean>>({
-    isModalOpen: false,
-    passwordModal: false,
-    signupModal: false,
-  });
-
-  const toggleModal = (modal: ModalKeys) => {
-    setModalState((prev) => ({ ...prev, [modal]: !prev[modal] }));
-  };
-
-  const toggleSidebar = () => {
-    setIsSidebarOpen(!isSidebarOpen);
-  };
-
   useEffect(() => {
-    const logOut = auth.onAuthStateChanged((user) => {
+    const unsubscribe = auth.onAuthStateChanged((user) => {
       setIsLoggedIn(!!user);
 
       if (user && modalState.isModalOpen) {
-        toggleModal("isModalOpen");
+        dispatch(toggleModal("isModalOpen"));
       }
     });
 
-    return () => logOut();
-  }, [modalState, toggleModal]);
+    return () => unsubscribe();
+  }, [modalState.isModalOpen, dispatch]);
+
+  const toggleSidebar = () => {
+    setIsSidebarOpen((prev) => !prev);
+  };
 
   return (
     <>
       <div className="fy__content--wrapper">
         <SearchBar toggleSidebar={toggleSidebar} />
-        <Modals toggleModal={toggleModal} modalState={modalState} />
-        <Sidebar
-          toggleSidebar={toggleSidebar}
-          isSidebarOpen={isSidebarOpen}
-          modalState={modalState}
-          toggleModal={toggleModal}
-        />
+        <Modals />
+        <Sidebar isSidebarOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
+
         <div className="row">
           <div className="container">
             <div className="inner__wrapper">
@@ -115,6 +106,7 @@ const BookDetails = () => {
                 ) : (
                   <div className="inner__book--subtitle">{book?.subTitle}</div>
                 )}
+
                 <div className="inner__book--wrapper">
                   <div className="inner__book--desc-wrapper">
                     {isLoading ? (
@@ -123,7 +115,7 @@ const BookDetails = () => {
                       <>
                         <div className="inner__book--desc">
                           <div className="inner__book--icon">
-                            <IoStarOutline className="inner__book--icon" />
+                            <IoStarOutline />
                           </div>
                           <div className="inner__book--overall-rating">
                             {book?.averageRating}
@@ -134,19 +126,19 @@ const BookDetails = () => {
                         </div>
                         <div className="inner__book--desc">
                           <div className="inner__book--icon">
-                            <CiClock2 className="inner__book--icon" />
+                            <CiClock2 />
                           </div>
                           <div className="inner__book--duration">03:24</div>
                         </div>
                         <div className="inner__book--desc">
                           <div className="inner__book--icon">
-                            <TiMicrophoneOutline className="inner__book--icon" />
+                            <TiMicrophoneOutline />
                           </div>
                           <div className="inner__book--type">{book?.type}</div>
                         </div>
                         <div className="inner__book--desc">
                           <div className="inner__book--icon">
-                            <HiOutlineLightBulb className="inner__book--icon" />
+                            <HiOutlineLightBulb />
                           </div>
                           <div className="inner__book--key-ideas">
                             {book?.keyIdeas} Key ideas
@@ -156,6 +148,7 @@ const BookDetails = () => {
                     )}
                   </div>
                 </div>
+
                 {isLoading ? (
                   <Skeleton width="50%" height="20px" borderRadius="4px" />
                 ) : (
@@ -165,7 +158,7 @@ const BookDetails = () => {
                         <Link href="/choose-plan">
                           <button className="inner__book--btn">
                             <div className="inner__book--btn-icon">
-                              <MdMenuBook className="inner__book--icon" />
+                              <MdMenuBook />
                             </div>
                             <div className="inner__book--btn-text">Read</div>
                           </button>
@@ -174,7 +167,7 @@ const BookDetails = () => {
                         <Link href={`/player/${book?.id}`}>
                           <button className="inner__book--btn">
                             <div className="inner__book--btn-icon">
-                              <MdMenuBook className="inner__book--icon" />
+                              <MdMenuBook />
                             </div>
                             <div className="inner__book--btn-text">Read</div>
                           </button>
@@ -182,11 +175,11 @@ const BookDetails = () => {
                       )
                     ) : (
                       <button
-                        onClick={() => toggleModal("isModalOpen")}
+                        onClick={() => dispatch(toggleModal("isModalOpen"))}
                         className="inner__book--btn"
                       >
                         <div className="inner__book--btn-icon">
-                          <MdMenuBook className="inner__book--icon" />
+                          <MdMenuBook />
                         </div>
                         <div className="inner__book--btn-text">Read</div>
                       </button>
@@ -196,7 +189,7 @@ const BookDetails = () => {
                         <Link href="/choose-plan">
                           <button className="inner__book--btn">
                             <div className="inner__book--btn-icon">
-                              <TiMicrophoneOutline className="inner__book--icon" />
+                              <TiMicrophoneOutline />
                             </div>
                             <div className="inner__book--btn-text">Listen</div>
                           </button>
@@ -205,7 +198,7 @@ const BookDetails = () => {
                         <Link href={`/player/${book?.id}`}>
                           <button className="inner__book--btn">
                             <div className="inner__book--btn-icon">
-                              <TiMicrophoneOutline className="inner__book--icon" />
+                              <TiMicrophoneOutline />
                             </div>
                             <div className="inner__book--btn-text">Listen</div>
                           </button>
@@ -213,11 +206,11 @@ const BookDetails = () => {
                       )
                     ) : (
                       <button
-                        onClick={() => toggleModal("isModalOpen")}
+                        onClick={() => dispatch(toggleModal("isModalOpen"))}
                         className="inner__book--btn"
                       >
                         <div className="inner__book--btn-icon">
-                          <TiMicrophoneOutline className="inner__book--icon" />
+                          <TiMicrophoneOutline />
                         </div>
                         <div className="inner__book--btn-text">Listen</div>
                       </button>
@@ -225,7 +218,7 @@ const BookDetails = () => {
                   </div>
                 )}
 
-                {isLoading ? null : (
+                {!isLoading && (
                   <div className="inner__book--bookmark">
                     <div className="inner__book--bookmark-icon">
                       <CiBookmark className="bookmark__icon" />
@@ -235,15 +228,15 @@ const BookDetails = () => {
                     </div>
                   </div>
                 )}
+
                 <div className="inner__book--secondary-title">
                   {isLoading ? (
                     <Skeleton width="50%" height="20px" borderRadius="4px" />
                   ) : (
-                    <div className="inner__book--secondary-title">
-                      What's it about?
-                    </div>
+                    "What's it about?"
                   )}
                 </div>
+
                 {isLoading ? (
                   <Skeleton width="100%" height="100%" borderRadius="4px" />
                 ) : (
@@ -267,6 +260,7 @@ const BookDetails = () => {
                   </>
                 )}
               </div>
+
               <div className="inner__book--img-wrapper">
                 <figure className="selected-book__img--wrapper">
                   {isLoading ? (
@@ -275,7 +269,8 @@ const BookDetails = () => {
                     <img
                       className="selected-book__img"
                       src={book?.imageLink}
-                    ></img>
+                      alt={book?.title}
+                    />
                   )}
                 </figure>
               </div>

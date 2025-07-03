@@ -9,30 +9,25 @@ import Image from "next/image";
 import login from "../assets/login.png";
 import Skeleton from "../components/Skeleton";
 
-type ModalKeys = "isModalOpen" | "passwordModal" | "signupModal";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "@/app/store";
+import { toggleModal } from "@/app/features/modal/modalSlice";
 
 const Settings = () => {
+  const dispatch = useDispatch();
+  const modalState = useSelector((state: RootState) => state.modal);
+
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>();
   const [userEmail, setUserEmail] = useState<string | null>(null);
   const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(true);
-
-  const [modalState, setModalState] = useState<Record<ModalKeys, boolean>>({
-    isModalOpen: false,
-    passwordModal: false,
-    signupModal: false,
-  });
-
-  const toggleModal = (modal: keyof typeof modalState) => { setModalState((prev) => ({ ...prev,
-    [modal]: !prev[modal] 
-    })); };
 
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
   };
 
   useEffect(() => {
-    const loggedIn = auth.onAuthStateChanged((user) => {
+    const unsubscribe = auth.onAuthStateChanged((user) => {
       if (user && user.email) {
         setIsLoggedIn(true);
         setUserEmail(user.email);
@@ -42,22 +37,16 @@ const Settings = () => {
       }
       setIsLoading(false);
     });
-  
-    return () => loggedIn();
-  }, [modalState, toggleModal]);
+
+    return () => unsubscribe();
+  }, []);
 
   return (
     <>
       <div className="fy__content--wrapper">
-      <SearchBar 
-      toggleSidebar={toggleSidebar}
-      />
-        <Sidebar
-          toggleSidebar={toggleSidebar}
-          isSidebarOpen={isSidebarOpen}
-          modalState={modalState}
-          toggleModal={toggleModal}
-        />
+        <SearchBar toggleSidebar={toggleSidebar} />
+        <Sidebar isSidebarOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
+
         <div className="container">
           <div className="row">
             <div className="section__title page__title">Settings</div>
@@ -76,9 +65,7 @@ const Settings = () => {
             ) : isLoggedIn ? (
               <>
                 <div className="setting__content">
-                  <div className="settings__subtitle">
-                    Your Subscription Plan
-                  </div>
+                  <div className="settings__subtitle">Your Subscription Plan</div>
                   <div className="settings__text">Basic</div>
                   <Link href="/choose-plan" className="btn settings__upgrade--btn">
                     Upgrade to Premium
@@ -86,9 +73,7 @@ const Settings = () => {
                 </div>
                 <div className="setting__content">
                   <div className="settings__subtitle">Email</div>
-                  <div className="settings__text">
-                    {userEmail || "guest@gmail.com"}
-                  </div>
+                  <div className="settings__text">{userEmail || "guest@gmail.com"}</div>
                 </div>
               </>
             ) : (
@@ -102,7 +87,7 @@ const Settings = () => {
                   Log in to your account to see your details.
                 </div>
                 <div
-                  onClick={() => toggleModal("isModalOpen")}
+                  onClick={() => dispatch(toggleModal("isModalOpen"))}
                   className="btn settings__login--btn"
                 >
                   Login
@@ -111,7 +96,8 @@ const Settings = () => {
             )}
           </div>
         </div>
-        <Modals toggleModal={toggleModal} modalState={modalState} />
+
+        <Modals />
       </div>
     </>
   );

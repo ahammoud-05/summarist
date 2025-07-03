@@ -11,38 +11,37 @@ import { LuLogIn, LuLogOut } from "react-icons/lu";
 import { usePathname } from "next/navigation";
 import { auth } from "../firebase/init";
 
+import { useDispatch, useSelector } from "react-redux";
+import { toggleModal } from "@/app/features/modal/modalSlice";
+import { RootState } from "@/app/store";
+
 type ModalKeys = "signupModal" | "isModalOpen" | "passwordModal";
 
 const Sidebar = ({
-  toggleModal,
-  modalState,
   isSidebarOpen,
   fontSize = 16,
   onFontSizeChange = () => {},
   toggleSidebar,
 }: {
-  toggleModal: (modal: ModalKeys) => void;
-  modalState: Record<ModalKeys, boolean>;
   isSidebarOpen: boolean;
   fontSize?: number;
   onFontSizeChange?: (size: number) => void;
   toggleSidebar: () => void;
 }) => {
   const pathname = usePathname();
-
+  const dispatch = useDispatch();
+  const modalState = useSelector((state: RootState) => state.modal);
   const [isLoggedIn, setIsLoggedIn] = useState<boolean | null>(null);
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       setIsLoggedIn(!!user);
-
       if (user && modalState.isModalOpen) {
-        toggleModal("isModalOpen");
+        dispatch(toggleModal("isModalOpen"));
       }
     });
-
     return () => unsubscribe();
-  }, [modalState, toggleModal]);
+  }, [dispatch, modalState.isModalOpen]);
 
   const handleLogOut = async () => {
     try {
@@ -152,7 +151,7 @@ const Sidebar = ({
             </div>
           ) : (
             <div
-              onClick={() => toggleModal("isModalOpen")}
+              onClick={() => dispatch(toggleModal("isModalOpen"))}
               className="sidebar__link--wrapper sidebar__hover"
             >
               <div className="sidebar__link--line"></div>
@@ -169,4 +168,3 @@ const Sidebar = ({
 };
 
 export default Sidebar;
-
