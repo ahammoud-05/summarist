@@ -1,40 +1,29 @@
 "use client";
-import React, { useState } from "react";
+import React from "react";
 import Navbar from "../components/Navbar";
 import Landing from "../components/Landing";
 import Features from "../components/Features";
 import Reviews from "../components/Reviews";
 import Numbers from "../components/Numbers";
 import Modals from "../components/Modals";
-
-type ModalKeys = "isModalOpen" | "passwordModal" | "signupModal";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "@/app/store";
+import { toggleModal } from "@/app/features/modal/modalSlice";
 
 const Main = () => {
-
-  const [modalState, setModalState] = useState<Record<ModalKeys, boolean>>({
-    isModalOpen: false,
-    passwordModal: false,
-    signupModal: false,
-  });
-
-  const toggleModal = (modal: ModalKeys) => { setModalState((prev) => ({ ...prev,
-    [modal]: !prev[modal] 
-    })); };
-
+  const dispatch = useDispatch();
+  const modalState = useSelector((state: RootState) => state.modal);
 
   return (
-
     <>
-      <Navbar modalState={modalState} toggleModal={toggleModal} />
-      <Landing modalState={modalState} toggleModal={toggleModal} />
-      <Modals modalState={modalState} toggleModal={toggleModal} />
+      <Navbar />
+      <Landing />
+      <Modals />
       <Features />
-      <Reviews modalState={modalState} toggleModal={toggleModal} />
+      <Reviews />
       <Numbers />
     </>
-
   );
-
 };
 
 export default Main;

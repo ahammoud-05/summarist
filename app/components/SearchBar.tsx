@@ -110,7 +110,7 @@ const SearchBar = ({ toggleSidebar }: {toggleSidebar: () => void;}) => {
                 </div>
               ) : books.map((book) => {
                 return (
-                  <a href={`/book/${book.id}`} className="search__book--link">
+                  <a key={book.id} href={`/book/${book.id}`} className="search__book--link">
                     <figure className="search__book--img-wrapper">
                       <img
                         src={book.imageLink}

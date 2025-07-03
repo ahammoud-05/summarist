@@ -10,6 +10,10 @@ import { FaPauseCircle, FaPlayCircle } from "react-icons/fa";
 import { ImSpinner8 } from "react-icons/im";
 import { MdOutlineForward10, MdOutlineReplay10 } from "react-icons/md";
 
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "@/app/store";
+import { toggleModal } from "@/app/features/modal/modalSlice";
+
 interface Book {
   id: string;
   author: string;
@@ -29,10 +33,11 @@ interface Book {
   authorDescription: string;
 }
 
-type ModalKeys = "isModalOpen" | "passwordModal" | "signupModal";
-
-const Player = ({}) => {
+const Player = () => {
   const { id } = useParams();
+  const dispatch = useDispatch();
+  const modalState = useSelector((state: RootState) => state.modal);
+
   const [book, setBook] = useState<Book | null>(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
@@ -52,22 +57,12 @@ const Player = ({}) => {
         setIsLoading(false);
       } catch (error) {
         setIsLoading(false);
-        return <div>Error fetching book.</div>;
+        console.error("Error fetching book:", error);
       }
     };
 
     fetchData();
   }, [id]);
-
-  const [modalState, setModalState] = useState<Record<ModalKeys, boolean>>({
-    isModalOpen: false,
-    passwordModal: false,
-    signupModal: false,
-  });
-
-  const toggleModal = (modal: ModalKeys) => {
-    setModalState((prev) => ({ ...prev, [modal]: !prev[modal] }));
-  };
 
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
@@ -118,23 +113,21 @@ const Player = ({}) => {
   useEffect(() => {
     if (audioRef.current) {
       audioRef.current.addEventListener("timeupdate", handleTimeUpdate);
-
-      return () => {
+      return () =>
         audioRef.current?.removeEventListener("timeupdate", handleTimeUpdate);
-      };
     }
   }, [audioRef.current]);
 
-  function formatDuration(durationSeconds: number): string {
+  const formatDuration = (durationSeconds: number): string => {
     const minutes = Math.floor(durationSeconds / 60);
     const seconds = Math.floor(durationSeconds % 60);
     const formattedSeconds = seconds.toString().padStart(2, "0");
     return `${minutes}:${formattedSeconds}`;
-  }
+  };
 
   return (
     <>
-      <Modals toggleModal={toggleModal} modalState={modalState} />
+      <Modals />
       <div className="fy__content--wrapper">
         <SearchBar toggleSidebar={toggleSidebar} />
         <Sidebar
@@ -142,8 +135,6 @@ const Player = ({}) => {
           fontSize={fontSize}
           onFontSizeChange={onFontSizeChange}
           isSidebarOpen={isSidebarOpen}
-          modalState={modalState}
-          toggleModal={toggleModal}
         />
         <div className="summary">
           {isLoading ? (
